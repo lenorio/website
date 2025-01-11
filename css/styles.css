@@ -13,20 +13,18 @@ body {
 }
 
 .background-video {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: auto;
-    height: auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     overflow: hidden;
     z-index: -1;
-	transform: translate(-50%, -50%) scale(1.1);
-    filter: blur(15px);
 }
 
 .background-video video {
-    min-width: 100%;
-    min-height: 100%;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
 }
 
@@ -55,14 +53,14 @@ body {
     position: relative;
     border-radius: 20px;
     z-index: 1;
-	margin: 10px;
+    margin: 10px;
 }
 
 .avatar {
-	width: 220px;
-	height: 220px;
-	border-radius: 1000px;
-	margin: 0;
+    width: 220px;
+    height: 220px;
+    border-radius: 1000px;
+    margin: 0;
 }
 
 .social-links-rectangle {
@@ -73,8 +71,8 @@ body {
 .nickname {
     font-family: "Roboto", sans-serif;
     color: white;
-	margin: 0;
-	margin-bottom: -10px;
+    margin: 0;
+    margin-bottom: -10px;
 }
 
 .discord {
@@ -138,7 +136,7 @@ body {
 .social-links img {
     width: 32px;
     height: 32px;
-	transition: filter 0.2s ease-in-out;
+    transition: filter 0.2s ease-in-out;
     border-radius: 1000px;
 }
 
@@ -321,5 +319,4 @@ body {
     top: 150px;
     left: 25px;
     margin: 0;
-    border-radius: 20px;
-}
+    border-radius: 20px
