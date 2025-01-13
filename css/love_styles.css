@@ -1,0 +1,153 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #000; /* Черный цвет фона */
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+    margin: 0;
+    position: relative;
+    cursor: none; /* Скрыть стандартный курсор */
+}
+
+.header {
+    text-align: center;
+    font-family: 'Lilita One', cursive;
+    color: #ffffff; /* Белый цвет текста */
+    margin-bottom: 20px;
+}
+
+.background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.container {
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+#password-prompt {
+    color: white; /* Белый цвет текста для надписи "Введите пароль" */
+}
+
+.btn {
+    padding: 15px 30px;
+    background-color: #ff3333; /* Яркий красный цвет кнопки */
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.btn:hover {
+    background-color: #ff3333; /* Убираем внутреннее свечение */
+}
+
+.password-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.check-btn {
+    padding: 10px;
+    background-color: #ff3333; /* Яркий красный цвет кнопки подтверждения пароля */
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 24px;
+    margin-left: 10px;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    width: 48px; /* Установить ширину кнопки */
+    height: 48px; /* Установить высоту кнопки */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.check-btn i {
+    font-size: 24px; /* Размер иконки */
+}
+
+.check-btn:hover {
+    background-color: #ff0000; /* Красная подсветка при наведении */
+}
+
+.rounded-input {
+    border-radius: 25px; /* Закругленные углы для поля ввода */
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ff3333; /* Цвет рамки соответствует цвету кнопки */
+    height: 48px; /* Установить высоту поля ввода как у check-btn */
+    width: auto; /* Установить автоматическую ширину */
+    min-width: 200px; /* Минимальная ширина поля ввода */
+}
+
+.hidden {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+.visible {
+    display: block;
+    opacity: 1;
+    animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.input-field {
+    margin-top: 20px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.message {
+    margin-top: 20px;
+    font-size: 36px;
+    color: #ffffff; /* Белый цвет текста */
+    font-weight: bold;
+    font-family: 'Lilita One', cursive;
+}
+
+.error {
+    margin-top: 10px;
+    color: #ff0000; /* Красный цвет ошибки */
+}
+
+.cursor-circle {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: rgba(255, 0, 0, 0.8); /* Красный цвет кружка */
+    border-radius: 50%;
+    pointer-events: none; /* Кружок не взаимодействует с элементами */
+    filter: blur(10px);
+    z-index: 2;
+}
+
+.glow {
+    box-sizing: border-box;
+    box-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #ff0000, 0 0 40px #ff0000, 0 0 50px #ff0000, 0 0 60px #ff0000, 0 0 70px #ff0000;
+}
+
+.glow:hover {
+    box-shadow: 0 0 20px #ff0000, 0 0 30px #ff0000, 0 0 40px #ff0000, 0 0 50px #ff0000, 0 0 60px #ff0000, 0 0 70px #ff0000, 0 0 80px #ff0000;
+}
