@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Люблю Вику</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/love_styles.css">
+</head>
+<body>
+    <div class="header">
+        <h1>Кого я люблю?</h1>
+    </div>
+    <div class="container">
+        <button class="btn glow" id="start-btn" onclick="showPasswordInput()">Начать</button>
+        <div id="password-input" class="hidden">
+            <p id="password-prompt">Введите пароль:</p>
+            <div class="password-container">
+                <input type="password" id="password" class="input-field rounded-input">
+                <button class="check-btn glow" id="submit-btn" onclick="checkPassword()"><i class="fas fa-check"></i></button>
+            </div>
+            <p id="error-message" class="error hidden">Неправильный пароль. Попробуйте снова.</p>
+        </div>
+    </div>
+    <div class="background"></div>
+    <div class="cursor-circle"></div>
+    <script src="js/love_script.js"></script>
+</body>
+</html>
