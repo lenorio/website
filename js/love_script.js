@@ -29,7 +29,7 @@ function checkPassword() {
             const hint = document.createElement("p");
             hint.id = "hint";
             hint.classList.add("hint");
-            hint.textContent = "За паролем напиши в телеграм";
+            hint.textContent = "За паролем напиши в телеграм @Lenorio_l_bot";
             hint.style.color = "#ff0000"; // Красный цвет текста для подсказки
             
             const passwordInput = document.getElementById("password-input");
