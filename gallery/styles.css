@@ -1,0 +1,115 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f1f1f1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Контейнер галереи */
+.gallery-container {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    position: relative;
+}
+
+/* Ряд изображений */
+.row {
+    display: flex;
+    gap: 10px;
+    white-space: nowrap;
+    animation: scrollGallery 20s linear infinite;
+}
+
+/* Настройки изображений */
+.row img {
+    height: calc(100vh / 5 - 10px); /* 5 рядов, высота фото адаптируется */
+    width: auto;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+}
+
+.row img:hover {
+    transform: scale(1.1);
+}
+
+/* Бесконечное движение */
+@keyframes scrollGallery {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+/* Плашка с текстом */
+.overlay-box {
+    position: absolute;
+    width: 33vw;
+    height: 33vh;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid rgba(255, 255, 255, 0.5);
+    transition: transform 0.1s linear, opacity 0.5s ease-in-out;
+    z-index: 10;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+/* Текст в плашке */
+.overlay-box h1 {
+    font-size: 3rem;
+    color: white;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Плашка скрыта */
+.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Полноэкранное изображение */
+.fullscreen-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.fullscreen {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 12px;
+    transition: transform 0.3s ease-in-out;
+}
+/* Изображения, которые можно кликать */
+img.clickable {
+    pointer-events: auto; /* Разрешаем клик */
+}
