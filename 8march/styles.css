@@ -65,7 +65,7 @@ body {
 
 .photo {
     position: absolute;
-    width: 70px;
+    width: 140px;
     height: auto;
     animation: floatAnimation linear infinite;
 }
