@@ -1,5 +1,5 @@
 const flowers = ['🌹', '🌸', '🌼', '💐', '🌷', '❤️'];
-const photoCount = 5;
+const photoCount = 11;
 
 function createFlower() {
     const flower = document.createElement('div');
