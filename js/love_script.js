@@ -12,7 +12,7 @@ function checkPassword() {
         const message = document.createElement("div");
         message.id = "message";
         message.classList.add("message", "visible");
-        message.textContent = "Люблю Вику";
+        message.textContent = "Люблю Лизу";
         
         // Добавление элемента сообщения в контейнер
         const container = document.querySelector(".container");
