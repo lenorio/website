@@ -1,5 +1,5 @@
 const flowers = ['🌹', '🌸', '🌼', '💐', '🌷', '❤️'];
-const photoCount = 11;
+const photoCount = 24;
 
 function createFlower() {
     const flower = document.createElement('div');
@@ -24,7 +24,7 @@ function createPhoto() {
     photo.classList.add('photo');
     photo.src = `8march/photo${Math.floor(Math.random() * photoCount) + 1}.jpg`;
 
-    const size = Math.random() * 50 + 50;
+    const size = (Math.random() * 50 + 50) * 3; // Увеличено в 3 раза
     photo.style.width = size + 'px';
     photo.style.height = 'auto';
     const offsetX = (Math.random() - 0.5) * 200;
