@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Обратный отсчет до ЕГЭ</title>
+    <script>
+        function countdown(targetDate, elementId) {
+            const now = new Date().getTime();
+            const distance = new Date(targetDate).getTime() - now;
+
+            if (distance < 0) {
+                document.getElementById(elementId).innerText = "Экзамен уже прошел!";
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById(elementId).innerText = 
+                `Осталось: ${days} дней, ${hours} часов, ${minutes} минут, ${seconds} секунд.`;
+        }
+
+        function startCountdowns() {
+            countdown("2025-05-27T00:00:00", "math");
+            countdown("2025-06-10T00:00:00", "informatics");
+            countdown("2025-05-30T00:00:00", "russian");
+
+            setInterval(() => {
+                countdown("2025-05-27T00:00:00", "math");
+                countdown("2025-06-10T00:00:00", "informatics");
+                countdown("2025-05-30T00:00:00", "russian");
+            }, 1000);
+        }
+    </script>
+</head>
+<body onload="startCountdowns()">
+    <h1>Обратный отсчет до ЕГЭ</h1>
+    <div>
+        <h2>До ЕГЭ по профильной математике осталось:</h2>
+        <p id="math">Загрузка...</p>
+    </div>
+    <div>
+        <h2>До ЕГЭ по информатике осталось:</h2>
+        <p id="informatics">Загрузка...</p>
+    </div>
+    <div>
+        <h2>До ЕГЭ по русскому языку осталось:</h2>
+        <p id="russian">Загрузка...</p>
+    </div>
+</body>
+</html>
