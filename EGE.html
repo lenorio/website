@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Обратный отсчет до ЕГЭ</title>
+    <title>Обратный отсчет до важных дат</title>
     <style>
         body {
             background-color: black;
@@ -46,16 +46,16 @@
         }
 
         function startCountdowns() {
-            countdown("2025-05-27T00:00:00", "math");
-            countdown("2025-06-10T00:00:00", "informatics");
-            countdown("2025-05-30T00:00:00", "russian");
             countdown("2025-05-24T00:00:00", "bell");
+            countdown("2025-05-27T00:00:00", "math");
+            countdown("2025-05-30T00:00:00", "russian");
+            countdown("2025-06-10T00:00:00", "informatics");
 
             setInterval(() => {
-                countdown("2025-05-27T00:00:00", "math");
-                countdown("2025-06-10T00:00:00", "informatics");
-                countdown("2025-05-30T00:00:00", "russian");
                 countdown("2025-05-24T00:00:00", "bell");
+                countdown("2025-05-27T00:00:00", "math");
+                countdown("2025-05-30T00:00:00", "russian");
+                countdown("2025-06-10T00:00:00", "informatics");
             }, 1000);
         }
     </script>
@@ -63,20 +63,20 @@
 <body onload="startCountdowns()">
     <h1>Обратный отсчет до важных дат</h1>
     <div>
-        <h2>До ЕГЭ по профильной математике осталось:</h2>
-        <p id="math">Загрузка...</p>
+        <h2>До Последнего звонка осталось:</h2>
+        <p id="bell">Загрузка...</p>
     </div>
     <div>
-        <h2>До ЕГЭ по информатике осталось:</h2>
-        <p id="informatics">Загрузка...</p>
+        <h2>До ЕГЭ по профильной математике осталось:</h2>
+        <p id="math">Загрузка...</p>
     </div>
     <div>
         <h2>До ЕГЭ по русскому языку осталось:</h2>
         <p id="russian">Загрузка...</p>
     </div>
     <div>
-        <h2>До Последнего звонка осталось:</h2>
-        <p id="bell">Загрузка...</p>
+        <h2>До ЕГЭ по информатике осталось:</h2>
+        <p id="informatics">Загрузка...</p>
     </div>
 </body>
 </html>
