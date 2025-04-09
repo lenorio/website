@@ -12,9 +12,15 @@
             text-align: center;
             margin: 0;
             padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
         h1, h2, p {
             text-shadow: 0 0 5px white;
+            margin: 10px 0;
         }
         div {
             margin: 20px 0;
@@ -26,7 +32,7 @@
             const distance = new Date(targetDate).getTime() - now;
 
             if (distance < 0) {
-                document.getElementById(elementId).innerText = "Экзамен уже прошел!";
+                document.getElementById(elementId).innerText = "Событие уже прошло!";
                 return;
             }
 
@@ -43,17 +49,19 @@
             countdown("2025-05-27T00:00:00", "math");
             countdown("2025-06-10T00:00:00", "informatics");
             countdown("2025-05-30T00:00:00", "russian");
+            countdown("2025-05-24T00:00:00", "bell");
 
             setInterval(() => {
                 countdown("2025-05-27T00:00:00", "math");
                 countdown("2025-06-10T00:00:00", "informatics");
                 countdown("2025-05-30T00:00:00", "russian");
+                countdown("2025-05-24T00:00:00", "bell");
             }, 1000);
         }
     </script>
 </head>
 <body onload="startCountdowns()">
-    <h1>Обратный отсчет до ЕГЭ</h1>
+    <h1>Обратный отсчет до важных дат</h1>
     <div>
         <h2>До ЕГЭ по профильной математике осталось:</h2>
         <p id="math">Загрузка...</p>
@@ -65,6 +73,10 @@
     <div>
         <h2>До ЕГЭ по русскому языку осталось:</h2>
         <p id="russian">Загрузка...</p>
+    </div>
+    <div>
+        <h2>До Последнего звонка осталось:</h2>
+        <p id="bell">Загрузка...</p>
     </div>
 </body>
 </html>
