@@ -119,7 +119,7 @@ a:before {
   height: 150px;
   width: 55px;
   margin-left: 10px;
-  background: url("https://cbwconline.com/IMG/Codepen/Space%20Ship.svg") center/contain no-repeat;
+  background: url("https://raw.githubusercontent.com/lenorio/lenorio128/refs/heads/main/svgs/spaceship.svg") center/contain no-repeat;
   animation: blackhole 4s infinite linear;
   position: absolute;
   bottom: -150px;
