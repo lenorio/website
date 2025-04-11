@@ -27,9 +27,14 @@
         }
     </style>
     <script>
+        function getTargetTime(year, month, day, hour, minutes) {
+            const targetDate = new Date(Date.UTC(year, month - 1, day, hour - 5, minutes));
+            return targetDate.getTime();
+        }
+
         function countdown(targetDate, elementId) {
             const now = new Date().getTime();
-            const distance = new Date(targetDate).getTime() - now;
+            const distance = targetDate - now;
 
             if (distance < 0) {
                 document.getElementById(elementId).innerText = "Событие уже прошло!";
@@ -46,16 +51,21 @@
         }
 
         function startCountdowns() {
-            countdown("2025-05-24T00:00:00", "bell");
-            countdown("2025-05-27T00:00:00", "math");
-            countdown("2025-05-30T00:00:00", "russian");
-            countdown("2025-06-10T00:00:00", "informatics");
+            const dates = [
+                { date: getTargetTime(2025, 5, 24, 10, 0), elementId: "bell" },
+                { date: getTargetTime(2025, 5, 27, 10, 0), elementId: "math" },
+                { date: getTargetTime(2025, 5, 30, 10, 0), elementId: "russian" },
+                { date: getTargetTime(2025, 6, 10, 10, 0), elementId: "informatics" }
+            ];
+
+            dates.forEach(item => {
+                countdown(item.date, item.elementId);
+            });
 
             setInterval(() => {
-                countdown("2025-05-24T00:00:00", "bell");
-                countdown("2025-05-27T00:00:00", "math");
-                countdown("2025-05-30T00:00:00", "russian");
-                countdown("2025-06-10T00:00:00", "informatics");
+                dates.forEach(item => {
+                    countdown(item.date, item.elementId);
+                });
             }, 1000);
         }
     </script>
