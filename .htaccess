@@ -5,3 +5,4 @@ RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^.*$ - [NC,L]
 ErrorDocument 404 https://lenorio.ru/404.html
 RewriteRule ^(.*) index.html [NC,L]
+Redirect 301 /sound https://music.yandex.ru/album/25969197/track/114088774

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Обратный отсчет до важных дат</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        h1, h2, p {
+            text-shadow: 0 0 5px white;
+            margin: 10px 0;
+        }
+        div {
+            margin: 20px 0;
+        }
+    </style>
+    <script>
+        function getTargetTime(year, month, day, hour, minutes) {
+            const targetDate = new Date(Date.UTC(year, month - 1, day, hour - 5, minutes));
+            return targetDate.getTime();
+        }
+
+        function countdown(targetDate, elementId) {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            if (distance < 0) {
+                document.getElementById(elementId).innerText = "Событие уже прошло!";
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById(elementId).innerText = 
+                `Осталось: ${days} дней, ${hours} часов, ${minutes} минут, ${seconds} секунд.`;
+        }
+
+        function startCountdowns() {
+            const dates = [
+                { date: getTargetTime(2025, 5, 24, 10, 0), elementId: "bell" },
+                { date: getTargetTime(2025, 5, 27, 10, 0), elementId: "math" },
+                { date: getTargetTime(2025, 5, 30, 10, 0), elementId: "russian" },
+                { date: getTargetTime(2025, 6, 10, 10, 0), elementId: "informatics" }
+            ];
+
+            dates.forEach(item => {
+                countdown(item.date, item.elementId);
+            });
+
+            setInterval(() => {
+                dates.forEach(item => {
+                    countdown(item.date, item.elementId);
+                });
+            }, 1000);
+        }
+    </script>
+</head>
+<body onload="startCountdowns()">
+    <h1>Обратный отсчет до важных дат</h1>
+    <div>
+        <h2>До Последнего звонка осталось:</h2>
+        <p id="bell">Загрузка...</p>
+    </div>
+    <div>
+        <h2>До ЕГЭ по профильной математике осталось:</h2>
+        <p id="math">Загрузка...</p>
+    </div>
+    <div>
+        <h2>До ЕГЭ по русскому языку осталось:</h2>
+        <p id="russian">Загрузка...</p>
+    </div>
+    <div>
+        <h2>До ЕГЭ по информатике осталось:</h2>
+        <p id="informatics">Загрузка...</p>
+    </div>
+</body>
+</html>
