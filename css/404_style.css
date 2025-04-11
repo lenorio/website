@@ -123,7 +123,7 @@ $border: $size/15;
   height: $size*2;
   width: $size - $border*4;
   margin-left: $border*2;
-  background: url("https://cbwconline.com/IMG/Codepen/Space%20Ship.svg") center/contain no-repeat;
+  background: url("github.com/lenorio/lenorio128/blob/main/svgs/spaceship.svg") center/contain no-repeat;
   animation: blackhole 4s infinite linear;
   position: absolute;
   bottom: -$size*2;
