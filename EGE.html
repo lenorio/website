@@ -52,6 +52,7 @@
 
         function startCountdowns() {
             const dates = [
+                { date: getTargetTime(2025, 5, 7, 10, 0), elementId: "birthday" },
                 { date: getTargetTime(2025, 5, 24, 10, 0), elementId: "bell" },
                 { date: getTargetTime(2025, 5, 27, 10, 0), elementId: "math" },
                 { date: getTargetTime(2025, 5, 30, 10, 0), elementId: "russian" },
@@ -72,6 +73,10 @@
 </head>
 <body onload="startCountdowns()">
     <h1>Обратный отсчет до важных дат</h1>
+    <div>
+        <h2>До Дня Рождения 🎉 осталось:</h2>
+        <p id="birthday">Загрузка...</p>
+    </div>
     <div>
         <h2>До Последнего звонка осталось:</h2>
         <p id="bell">Загрузка...</p>
