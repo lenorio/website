@@ -1,11 +1,11 @@
 <?php
 define('SKIN_LANGUAGE', 'skins_en');
 
-define('DB_HOST', 'localhost');
+define('DB_HOST', 'd5.aurorix.net');
 define('DB_PORT', '3306');
-define('DB_NAME', '');
-define('DB_USER', '');
-define('DB_PASS', '');
+define('DB_NAME', 's91810_cs2_server');
+define('DB_USER', 'u91810_juXGPLlail');
+define('DB_PASS', 'L=us!EbdUVgKmC=0DK9Zb8Ir');
 
 define('WEB_STYLE_DARK', true);
 
