@@ -5,7 +5,7 @@ class DataBase {
 
     public function __construct() {
         try {
-            $this->PDO = new PDO("mysql:host=".DB_HOST."; port=".DB_PORT."; dbname=".DB_NAME, DB_USER, DB_PASS, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+            $this->PDO = new PDO("mysql:host="d5.aurorix.net"; port="3306"; dbname="s91810_cs2_server, u91810_juXGPLlail, L=us!EbdUVgKmC=0DK9Zb8Ir, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
         }
         catch(PDOException $ex)
         {
