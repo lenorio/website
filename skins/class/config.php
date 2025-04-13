@@ -1,5 +1,5 @@
 <?php
-define('SKIN_LANGUAGE', 'skins_en');
+define('SKIN_LANGUAGE', 'skins_ru');
 
 define('DB_HOST', 'd5.aurorix.net');
 define('DB_PORT', '3306');
