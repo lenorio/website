@@ -9,7 +9,7 @@ define('DB_PASS', 'L=us!EbdUVgKmC=0DK9Zb8Ir');
 
 define('WEB_STYLE_DARK', true);
 
-define('STEAM_API_KEY', '');
+define('STEAM_API_KEY', '5F621ABC83CE425A1AC3FAFEFDE0C01E');
 define('STEAM_DOMAIN_NAME', '');
 define('STEAM_LOGOUT_PAGE', '');
 define('STEAM_LOGIN_PAGE', '');
