@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>SMALL CAPITAL GENERATOR</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", sans-serif;
+      background-color: #121212;
+      color: #f0f0f0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+      min-height: 100vh;
+    }
+
+    h1 {
+      margin-bottom: 30px;
+      font-size: 28px;
+      color: #ffffff;
+    }
+
+    .wrapper {
+      display: flex;
+      width: 100%;
+      max-width: 1200px;
+      gap: 20px;
+    }
+
+    .container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      font-size: 16px;
+      margin-bottom: 8px;
+      color: #aaa;
+    }
+
+    textarea {
+      width: 100%;
+      height: 350px;
+      padding: 15px;
+      font-size: 16px;
+      background-color: #1e1e1e;
+      color: #f0f0f0;
+      border: 1px solid #333;
+      border-radius: 10px;
+      resize: none;
+      outline: none;
+      transition: border 0.2s;
+    }
+
+    textarea:focus {
+      border-color: #5c6bc0;
+    }
+
+    @media (max-width: 768px) {
+      .wrapper {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>SMALL CAPITAL GENERATOR</h1>
+
+  <div class="wrapper">
+    <div class="container">
+      <label for="inputText">Обычный текст</label>
+      <textarea id="inputText" placeholder="Введите текст..."></textarea>
+    </div>
+    <div class="container">
+      <label for="outputText">Стилизованный текст</label>
+      <textarea id="outputText" readonly></textarea>
+    </div>
+  </div>
+
+  <script>
+    const input = document.getElementById('inputText');
+    const output = document.getElementById('outputText');
+
+    const map = {
+      'a': 'ᴀ', 'b': 'ʙ', 'c': 'ᴄ', 'd': 'ᴅ', 'e': 'ᴇ', 'f': 'ꜰ', 'g': 'ɢ', 'h': 'ʜ',
+      'i': 'ɪ', 'j': 'ᴊ', 'k': 'ᴋ', 'l': 'ʟ', 'm': 'ᴍ', 'n': 'ɴ', 'o': 'ᴏ', 'p': 'ᴘ',
+      'q': 'ǫ', 'r': 'ʀ', 's': 's', 't': 'ᴛ', 'u': 'ᴜ', 'v': 'ᴠ', 'w': 'ᴡ',
+      'x': 'x', 'y': 'ʏ', 'z': 'ᴢ',
+      'A': 'ᴀ', 'B': 'ʙ', 'C': 'ᴄ', 'D': 'ᴅ', 'E': 'ᴇ', 'F': 'ꜰ', 'G': 'ɢ', 'H': 'ʜ',
+      'I': 'ɪ', 'J': 'ᴊ', 'K': 'ᴋ', 'L': 'ʟ', 'M': 'ᴍ', 'N': 'ɴ', 'O': 'ᴏ', 'P': 'ᴘ',
+      'Q': 'ǫ', 'R': 'ʀ', 'S': 's', 'T': 'ᴛ', 'U': 'ᴜ', 'V': 'ᴠ', 'W': 'ᴡ',
+      'X': 'x', 'Y': 'ʏ', 'Z': 'ᴢ',
+
+      'а': 'ᴀ', 'б': 'б', 'в': 'ʙ', 'г': 'ᴦ', 'д': 'д', 'е': 'ᴇ', 'ё': 'ё', 'ж': 'ж', 'з': 'з',
+      'и': 'и', 'й': 'й', 'к': 'ᴋ', 'л': 'ᴧ', 'м': 'ʍ', 'н': 'н', 'о': 'о', 'п': 'ᴨ',
+      'р': 'ᴩ', 'с': 'ᴄ', 'т': 'ᴛ', 'у': 'у', 'ф': 'ɸ', 'х': 'х', 'ц': 'ц', 'ч': 'ч',
+      'ш': 'ɯ', 'щ': 'щ', 'ъ': 'ъ', 'ы': 'ы', 'ь': 'ь', 'э': '϶', 'ю': 'ю', 'я': 'я',
+
+      'А': 'ᴀ', 'Б': 'б', 'В': 'ʙ', 'Г': 'ᴦ', 'Д': 'д', 'Е': 'ᴇ', 'Ё': 'ё', 'Ж': 'ж', 'З': 'з',
+      'И': 'и', 'Й': 'й', 'К': 'ᴋ', 'Л': 'ᴧ', 'М': 'ʍ', 'Н': 'н', 'О': 'о', 'П': 'ᴨ',
+      'Р': 'ᴩ', 'С': 'ᴄ', 'Т': 'ᴛ', 'У': 'у', 'Ф': 'ɸ', 'Х': 'х', 'Ц': 'ц', 'Ч': 'ч',
+      'Ш': 'ɯ', 'Щ': 'щ', 'Ъ': 'ъ', 'Ы': 'ы', 'Ь': 'ь', 'Э': '϶', 'Ю': 'ю', 'Я': 'я'
+    };
+
+    function convertText(text) {
+      return text.split('').map(char => map[char] || char).join('');
+    }
+
+    input.addEventListener('input', () => {
+      output.value = convertText(input.value);
+    });
+  </script>
+</body>
+</html>
