@@ -3,13 +3,253 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>С 8 Марта!</title>
-    <link rel="stylesheet" href="styles.css">
+		        <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <script>
+        // Здесь будет вставлен код скрипта анимации заголовка
+        document.addEventListener('DOMContentLoaded', function() {
+            const fullTitle = "💗С 8 Марта!️💗";
+            let currentIndex = 0;
+            let isGrowing = true;
+            const speed = 200;
+
+            function animateTitle() {
+                document.title = fullTitle.substring(0, currentIndex);
+
+                if (isGrowing) {
+                    currentIndex++;
+                    if (currentIndex > fullTitle.length) {
+                        isGrowing = false;
+                        currentIndex = fullTitle.length - 1;
+                    }
+                } else {
+                    currentIndex--;
+                    if (currentIndex < 1) {
+                        isGrowing = true;
+                        currentIndex = 1;
+                    }
+                }
+
+                setTimeout(animateTitle, speed);
+            }
+
+            document.title = fullTitle.substring(0, 1);
+            setTimeout(animateTitle, 1000);
+        });
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom CSS for animations and specific styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            /* New softer gradient background */
+            background: linear-gradient(135deg, #ffe4e1, #ffc0cb, #f8bbd0); /* Misty Rose -> Pink -> Light Pink */
+            min-height: 100vh;
+            overflow: hidden; /* Prevent scrollbars */
+        }
+
+        /* Container for floating elements */
+        .floating-elements-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        /* Base style for floating elements (flowers and photos) */
+        .floating-element {
+            position: absolute;
+            bottom: -150px; /* Start below the viewport */
+            animation: floatAnimation linear infinite;
+            will-change: transform, opacity;
+        }
+
+        /* Specific style for photo elements - WITH shadow */
+        .photo-element {
+             border-radius: 0.5rem; /* Rounded corners for photos */
+             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); /* Slightly softer shadow */
+             object-fit: cover; /* Ensure images cover the area well */
+        }
+
+        /* Specific style for flower emojis - NO shadow */
+        .flower-emoji {
+            /* No box-shadow here */
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Optional subtle text shadow */
+        }
+
+        /* Floating animation */
+        @keyframes floatAnimation {
+            0% {
+                transform: translateY(150px);
+                opacity: 0;
+            }
+            10%, 90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-120vh);
+                opacity: 0;
+            }
+        }
+
+        /* Message text animation */
+        @keyframes fadeInGlow {
+             0% {
+                opacity: 0;
+                transform: scale(0.8);
+                text-shadow: 0 0 4px #ffffff, 0 0 8px #ffffff;
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.05);
+                /* Adjusted glow colors for new background */
+                text-shadow: 0 0 8px #ffe4e1, 0 0 16px #ffe4e1, 0 0 24px #ffc0cb;
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+                text-shadow: 0 0 4px #ffffff, 0 0 12px #ffffff, 0 0 20px #f8bbd0;
+            }
+        }
+
+        .message-animate {
+            animation: fadeInGlow 3s ease-in-out forwards;
+        }
+
+        /* Start Screen Styles */
+        #start-screen {
+            background-color: rgba(0, 0, 0, 0.4); /* Semi-transparent black */
+            backdrop-filter: blur(5px); /* Blur background */
+            transition: opacity 0.5s ease-out, visibility 0.5s ease-out; /* Smooth fade out */
+        }
+        #start-screen.hidden {
+            opacity: 0;
+            visibility: hidden; /* Hide completely after transition */
+        }
+
+    </style>
 </head>
-<body>
-    <div class="background"></div>
-    <div class="flowers-container"></div>
-    <div class="message">Мы вас любим!</div>
-    <script src="script.js"></script>
+<body class="relative flex items-center justify-center min-h-screen">
+
+    <div id="start-screen" class="absolute inset-0 z-20 flex flex-col items-center justify-center cursor-pointer">
+         <div class="text-center p-6 bg-white/30 backdrop-blur-sm rounded-lg shadow-lg">
+            <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-3">С 8 Марта!</h2>
+            <p class="text-lg text-gray-700 animate-pulse">Нажмите, чтобы продолжить</p>
+         </div>
+    </div>
+
+    <div class="floating-elements-container"></div>
+
+    <div class="message relative z-10 text-center p-6 opacity-0"> <h1 id="main-message" class="text-4xl sm:text-5xl md:text-6xl font-bold text-white">
+            Мы вас любим!
+        </h1>
+    </div>
+
+    <script>
+        // --- Configuration ---
+        const flowers = ['🌹', '🌸', '🌼', '💐', '🌷', '❤️', '💖', '✨'];
+        // !!! ВАЖНО: Установите это значение равным количеству фотографий в папке ./8march !!!
+        const photoCount = 24; // <--- ИЗМЕНИТЕ ЭТО ЧИСЛО ПРИ НЕОБХОДИМОСТИ
+        const flowerInterval = 150; // ms
+        const photoInterval = 600; // ms
+        const elementLifetime = 12000; // ms
+
+        // --- DOM Elements ---
+        const container = document.querySelector('.floating-elements-container');
+        const startScreen = document.getElementById('start-screen');
+        const mainMessageContainer = document.querySelector('.message');
+        const mainMessage = document.getElementById('main-message');
+
+        // --- State ---
+        let animationIntervals = [];
+        let animationStarted = false;
+
+        // --- Functions ---
+
+        /**
+         * Creates and animates a flower emoji.
+         */
+        function createFlower() {
+            const flower = document.createElement('div');
+            flower.classList.add('floating-element', 'flower-emoji');
+            flower.textContent = flowers[Math.floor(Math.random() * flowers.length)];
+            const size = Math.random() * 25 + 20;
+            flower.style.fontSize = `${size}px`;
+            flower.style.left = `${Math.random() * 95}%`;
+            const duration = Math.random() * 7 + 6;
+            flower.style.animationDuration = `${duration}s`;
+            flower.style.animationDelay = `${Math.random() * 2}s`;
+            container.appendChild(flower);
+            setTimeout(() => { flower.remove(); }, elementLifetime);
+        }
+
+        /**
+         * Creates and animates a photo from the local ./8march folder.
+         */
+        function createPhoto() {
+            const photo = document.createElement('img');
+            photo.classList.add('floating-element', 'photo-element');
+
+            // --- Generate Local Image Path ---
+            // Select a random photo number between 1 and photoCount (inclusive)
+            const photoNumber = Math.floor(Math.random() * photoCount) + 1;
+            // Construct the relative path to the image
+            photo.src = `./8march/photo${photoNumber}.jpg`;
+            // --- End Local Image Path ---
+
+            photo.alt = `Фото ${photoNumber}`; // Russian alt text with number
+            const sizePx = Math.floor(Math.random() * 150 + 100); // Size between 80px and 140px
+            photo.style.width = `${sizePx}px`;
+            photo.style.height = `${sizePx}px`;
+            // object-fit is now handled by the .photo-element CSS class
+
+            // Fallback if the image fails to load (e.g., wrong path, file not found)
+            photo.onerror = function() {
+                console.warn(`Ошибка загрузки изображения: ${photo.src}. Проверьте путь и имя файла.`);
+                // Optional: Display a placeholder or remove the element
+                // Example: photo.src = 'path/to/placeholder.jpg';
+                photo.remove();
+            };
+
+            photo.style.left = `${Math.random() * 95}%`;
+            const duration = Math.random() * 8 + 7;
+            photo.style.animationDuration = `${duration}s`;
+            photo.style.animationDelay = `${Math.random() * 3}s`;
+            container.appendChild(photo);
+            setTimeout(() => { photo.remove(); }, elementLifetime);
+        }
+
+        /**
+         * Starts the main animation sequence.
+         */
+        function startAnimation() {
+            if (animationStarted) return;
+            animationStarted = true;
+
+            console.log("Запуск анимации..."); // Debug log in Russian
+
+            startScreen.classList.add('hidden');
+            mainMessageContainer.style.opacity = '1';
+            mainMessage.classList.add('message-animate');
+
+            animationIntervals.push(setInterval(createFlower, flowerInterval));
+            animationIntervals.push(setInterval(createPhoto, photoInterval));
+
+            setTimeout(() => {
+                startScreen.remove();
+            }, 600);
+        }
+
+        // --- Event Listener ---
+        startScreen.addEventListener('click', startAnimation);
+        startScreen.addEventListener('touchstart', startAnimation, { passive: true });
+
+    </script>
 </body>
 </html>
