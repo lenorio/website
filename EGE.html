@@ -61,11 +61,16 @@
         }
     </style>
     <script>
+        // Function to get the target time in UTC
+        // Considering that 12:00 Irkutsk time (UTC+8) is 4:00 UTC
         function getTargetTime(year, month, day) {
-            const targetDate = new Date(Date.UTC(year, month - 1, day, 4, 0));
+            // Months in JavaScript are 0-indexed, so subtract 1
+            // Set time to 4:00 UTC (which corresponds to 12:00 UTC+8)
+            const targetDate = new Date(Date.UTC(year, month - 1, day, 4, 0)); // 4 - UTC hour, 0 - minutes
             return targetDate.getTime();
         }
 
+        // Function to update the countdown
         function countdown(targetDate, elementId) {
             const now = new Date().getTime();
             const distance = targetDate - now;
@@ -79,37 +84,51 @@
                 return;
             }
 
+            // Calculate days, hours, minutes, and seconds
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
+            // Update the element's text
             element.innerHTML =
                 `<strong>Осталось: ${days} дней, ${hours} часов, ${minutes} минут, ${seconds} секунд.</strong>`;
         }
 
+        // Function to start all countdowns
         function startCountdowns() {
+            // Array with target dates and element IDs for display
             const dates = [
+                // Birthday countdown
                 { date: getTargetTime(2025, 5, 7), elementId: "birthday-countdown" },
+                // Last bell countdown
                 { date: getTargetTime(2025, 5, 24), elementId: "bell-countdown" },
+                // Math exam countdown
                 { date: getTargetTime(2025, 5, 27), elementId: "math-countdown" },
+                // Russian exam countdown
                 { date: getTargetTime(2025, 5, 30), elementId: "russian-countdown" },
+                // Informatics exam countdown
                 { date: getTargetTime(2025, 6, 10), elementId: "informatics-countdown" }
             ];
 
+            // Start the first countdown immediately
             dates.forEach(item => {
                 countdown(item.date, item.elementId);
             });
 
+            // Update countdown every second
             setInterval(() => {
                 dates.forEach(item => {
                     countdown(item.date, item.elementId);
                 });
             }, 1000);
 
+            // Add click listeners for cards
             setupCardClickListeners();
 
+             // Add window resize listener for correct positioning when expanded
             window.addEventListener('resize', () => {
+                // If any card is expanded, recalculate its position
                 const expandedItem = document.querySelector('.countdown-item.expanded');
                 if (expandedItem) {
                     const gridContainer = document.getElementById('countdown-grid');
@@ -127,6 +146,7 @@
             });
         }
 
+        // Function to set up click listeners for cards
         function setupCardClickListeners() {
             const countdownItems = document.querySelectorAll('.countdown-item');
             const gridContainer = document.getElementById('countdown-grid');
@@ -135,10 +155,14 @@
                 item.addEventListener('click', () => {
                     const isExpanded = item.classList.contains('expanded');
 
+                    // If the card is already expanded, collapse it
                     if (isExpanded) {
+                         // Remove expanded class
                         item.classList.remove('expanded');
+                        // Remove grid-expanded class from container
                         gridContainer.classList.remove('grid-expanded');
 
+                        // Reset inline styles to allow element to return to grid flow
                         item.style.position = '';
                         item.style.top = '';
                         item.style.left = '';
@@ -146,23 +170,26 @@
                         item.style.height = '';
                         item.style.zIndex = '';
 
+                         // Show all other cards again
                          countdownItems.forEach(otherItem => {
-                             otherItem.style.cssText = '';
+                             otherItem.style.cssText = ''; // Reset all inline styles
                              otherItem.style.opacity = '1';
                              otherItem.style.visibility = 'visible';
                              otherItem.style.pointerEvents = 'auto';
                          });
 
                     } else {
+                        // If the card is not expanded, collapse all (if any were expanded)
                          countdownItems.forEach(otherItem => {
                              otherItem.classList.remove('expanded');
-                             otherItem.style.cssText = '';
+                             otherItem.style.cssText = ''; // Reset all inline styles
                               otherItem.style.opacity = '1';
                               otherItem.style.visibility = 'visible';
                               otherItem.style.pointerEvents = 'auto';
                          });
-                         gridContainer.classList.remove('grid-expanded');
+                         gridContainer.classList.remove('grid-expanded'); // Temporarily remove class from container
 
+                        // Get the current size and position of the clicked element and the container
                         const itemRect = item.getBoundingClientRect();
                         const containerRect = gridContainer.getBoundingClientRect();
                         const containerPaddingTop = parseFloat(window.getComputedStyle(gridContainer).paddingTop);
@@ -171,25 +198,34 @@
                         const containerPaddingBottom = parseFloat(window.getComputedStyle(gridContainer).paddingBottom);
 
 
+                        // Set initial inline styles for absolute positioning
+                        // Position relative to the container
                         item.style.position = 'absolute';
                         item.style.top = `${itemRect.top - containerRect.top}px`;
                         item.style.left = `${itemRect.left - containerRect.left}px`;
                         item.style.width = `${itemRect.width}px`;
                         item.style.height = `${itemRect.height}px`;
-                        item.style.zIndex = '10';
+                        item.style.zIndex = '10'; // Bring to front
 
+                        // Force reflow to register initial styles before transition
                         item.offsetHeight;
 
+                        // Set final inline styles for expanded state
+                        // Position and size within the container including padding
+                        // Now using container padding to define final position
                         item.style.top = `${containerPaddingTop}px`;
                         item.style.left = `${containerPaddingLeft}px`;
                         item.style.right = `${containerPaddingRight}px`;
                         item.style.bottom = `${containerPaddingBottom}px`;
-                        item.style.width = `auto`;
+                        item.style.width = `auto`; // Allow right and bottom to define width/height
                         item.style.height = `auto`;
 
 
+                        // Add expanded class (for additional styles if needed)
                         item.classList.add('expanded');
 
+                        // Add grid-expanded class to container with a small delay
+                        // This allows the clicked card to start transitioning before others hide
                         setTimeout(() => {
                              gridContainer.classList.add('grid-expanded');
                              countdownItems.forEach(otherItem => {
@@ -199,7 +235,7 @@
                                      otherItem.style.visibility = 'hidden';
                                  }
                              });
-                        }, 50);
+                        }, 50); // Small delay in milliseconds, can be adjusted
                     }
                 });
             });
@@ -207,7 +243,7 @@
     </script>
 </head>
 <body class="bg-gradient-to-br from-gray-900 to-black text-white flex flex-col items-center justify-center min-h-screen p-4" onload="startCountdowns()">
-    <h1 class="text-4xl md:text-5xl font-extrabold mb-12 text-shadow-strong">Обратный отсчет до важных дат</h1>
+    <h1 class="text-4xl md:text-5xl font-extrabold mb-12 text-shadow-strong">Отсчет до дня рождения</h1>
 
     <div id="countdown-grid" class="w-full max-w-2xl bg-gray-800 bg-opacity-70 p-8 rounded-xl shadow-2xl grid grid-cols-1 md:grid-cols-2 gap-6">
         <div class="countdown-item bg-gray-700 bg-opacity-50 p-6 rounded-lg shadow-lg flex flex-col items-center">
