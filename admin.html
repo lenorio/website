@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Размытый Фон с GIF</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url('media/backwards.gif');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            font-family: sans-serif;
+            position: relative;
+        }
+        .glitch-text {
+            color: #FFFFFF; 
+            font-size: 8vw; 
+            font-weight: bold;
+            text-align: center;
+            user-select: none; 
+            position: relative; 
+            z-index: 3; 
+            word-break: break-word; 
+            padding: 0 10px;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5); 
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            backdrop-filter: blur(10px); 
+            -webkit-backdrop-filter: blur(10px); 
+            pointer-events: none;
+            z-index: 2;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="glitch-text">
+        #FUCKРОСКОМНАДЗОР
+    </div>
+
+</body>
+</html>
