@@ -91,8 +91,13 @@
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
             // Update the element's text
-            element.innerHTML =
-                `<strong>Осталось: ${days} дней, ${hours} часов, ${minutes} минут, ${seconds} секунд.</strong>`;
+            const countdownText = `<strong>Осталось: ${days} дней, ${hours} часов, ${minutes} минут, ${seconds} секунд.</strong>`;
+            element.innerHTML = countdownText;
+
+            // If this is the birthday countdown, update the document title
+            if (elementId === 'birthday-countdown') {
+                document.title = `До дня рождения: ${days}д ${hours}ч ${minutes}м ${seconds}с`;
+            }
         }
 
         // Function to start all countdowns
@@ -243,7 +248,7 @@
     </script>
 </head>
 <body class="bg-gradient-to-br from-gray-900 to-black text-white flex flex-col items-center justify-center min-h-screen p-4" onload="startCountdowns()">
-    <h1 class="text-4xl md:text-5xl font-extrabold mb-12 text-shadow-strong">Отсчет до дня рождения</h1>
+    <h1 class="text-4xl md:text-5xl font-extrabold mb-12 text-shadow-strong">Обратный отсчет до важных дат</h1>
 
     <div id="countdown-grid" class="w-full max-w-2xl bg-gray-800 bg-opacity-70 p-8 rounded-xl shadow-2xl grid grid-cols-1 md:grid-cols-2 gap-6">
         <div class="countdown-item bg-gray-700 bg-opacity-50 p-6 rounded-lg shadow-lg flex flex-col items-center">
