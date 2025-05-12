@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MEMESENSE CONFIG</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif; /* Используем Roboto */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #1a1a1a; /* Серый фон */
+            color: #fefefe; /* Белый текст */
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            /* Добавляем легкую текстуру или градиент */
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+CiAgPHJlY3Qgd2lkdGg9IjIwIiBoZWlnaHQ9IjIwIiBmaWxsPSIjMTUxNTUxIi8+CiAgPHBhdGggZD0iTTAgMEwyMCAyME0yMCAwTDAgMjAiIHN0cm9rZT0iIzI4MjgyOCIgc3Ryb2tlLXdpZHRoPSIwLjUiLz4KPC9zdmc+');
+            background-size: 20px 20px;
+        }
+
+        .language-overlay {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #1a1a1a; /* Серый фон */
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6); /* Более выраженная тень */
+            text-align: center;
+            border: 1px solid #ee4747; /* Красная рамка */
+            backdrop-filter: blur(5px); /* Легкое размытие фона */
+        }
+
+        .language-overlay h2 {
+            margin-bottom: 25px;
+            color: #ee4747; /* Красный акцент */
+            font-weight: 700;
+            text-shadow: 0 0 5px rgba(238, 71, 71, 0.5); /* Тень для текста */
+        }
+
+        .language-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .language-button {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            background: linear-gradient(to right, #ee4747, #d03c3c); /* Градиент на кнопке (от красного к чуть темнее) */
+            color: white;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: 700;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 10px rgba(238, 71, 71, 0.4); /* Тень для кнопки */
+            text-transform: uppercase; /* Текст заглавными буквами */
+        }
+
+        .language-button:hover {
+            background: linear-gradient(to right, #d03c3c, #ee4747); /* Изменение градиента при наведении */
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(238, 71, 71, 0.6);
+        }
+
+        .container {
+            display: none;
+            background-color: #1a1a1a; /* Серый фон */
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid #ee4747; /* Красная рамка */
+            backdrop-filter: blur(5px); /* Легкое размытие фона */
+        }
+
+        h1 {
+            color: #ee4747; /* Красный акцент */
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 0 0 5px rgba(238, 71, 71, 0.5); /* Тень для текста */
+        }
+
+        .update-log {
+            text-align: left;
+            border: 1px solid #333; /* Темно-серая рамка */
+            padding: 15px;
+            margin-bottom: 20px;
+            white-space: pre-wrap;
+            background-color: #282828; /* Чуть светлее серый фон для лога */
+            color: #fefefe; /* Белый текст */
+            max-height: 300px;
+            overflow-y: auto;
+            line-height: 1.6;
+            width: 100%;
+            box-sizing: border-box;
+            border-radius: 5px;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3); /* Внутренняя тень */
+        }
+
+        .last-update {
+            font-size: 0.9em;
+            color: #cccccc; /* Светло-серый */
+            margin-bottom: 20px;
+        }
+
+        .config-code-label {
+            font-size: 1em;
+            color: #fefefe; /* Белый текст */
+            margin-bottom: 10px;
+            display: block;
+            font-weight: 700;
+        }
+
+        .config-code-input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #333; /* Темно-серая рамка */
+            border-radius: 5px;
+            font-size: 1em;
+            text-align: center;
+            box-sizing: border-box;
+            background-color: #282828; /* Чуть светлее серый фон */
+            color: #fefefe; /* Белый цвет для кода */
+            cursor: text;
+            font-family: 'Share Tech Mono', monospace; /* Моноширинный шрифт в стиле "техно" */
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3); /* Внутренняя тень */
+        }
+    </style>
+</head>
+<body>
+    <div class="language-overlay" id="languageOverlay">
+        <h2>Выберите язык / Choose your language</h2>
+        <div class="language-buttons">
+            <button class="language-button" onclick="setLanguage('ru')">Русский</button>
+            <button class="language-button" onclick="setLanguage('en')">English</button>
+        </div>
+    </div>
+
+    <div class="container" id="mainContent">
+        <h1 id="pageTitle"></h1>
+        <div id="updateLogContent" class="update-log"></div>
+        <p class="last-update" id="lastUpdateDate"></p>
+
+        <label for="configCodeInput" class="config-code-label" id="configCodeLabel"></label>
+        <input type="text" id="configCodeInput" class="config-code-input" value="" readonly>
+
+    </div>
+
+    <script>
+        // *** Переменная с кодом конфига - обновляйте только ее значение! ***
+        const currentConfigCode = 'a5680612d5bcd1dd';
+        // ******************************************************************
+
+        // *** Переменные с текстом лога обновлений для каждого языка ***
+        const ruUpdateLog = `13.05.2025 - сделан конфиг, изменены визуалы, изменен R8`;
+
+        const enUpdateLog = `13.05.2025 - config created, visuals changed, R8 changed.`;
+        // ************************************************************
+
+
+        // Определяем контент для разных языков, ссылаясь на переменные с логом
+        const content = {
+            ru: {
+                title: 'Лог обновлений',
+                log: ruUpdateLog, // Ссылка на переменную
+                lastUpdateLabel: 'Последнее обновление: ',
+                configCodeLabel: 'Код конфига:',
+            },
+            en: {
+                title: 'Update Log',
+                log: enUpdateLog, // Ссылка на переменную
+                lastUpdateLabel: 'Last update: ',
+                configCodeLabel: 'Config Code:',
+            }
+        };
+
+        // Функция для установки языка и отображения основного контента
+        function setLanguage(lang) {
+            const selectedContent = content[lang];
+
+            // Обновляем элементы страницы
+            document.getElementById('pageTitle').innerText = selectedContent.title;
+            document.getElementById('updateLogContent').innerText = selectedContent.log;
+            // Устанавливаем дату последнего обновления
+            const today = new Date();
+            const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+            const formattedDate = today.toLocaleDateString(lang === 'en' ? 'en-US' : 'ru-RU', options); // Форматируем дату в зависимости от языка
+            document.getElementById('lastUpdateDate').innerText = selectedContent.lastUpdateLabel + formattedDate;
+
+            // Обновляем метку для поля с кодом конфига
+            document.getElementById('configCodeLabel').innerText = selectedContent.configCodeLabel;
+
+            // Устанавливаем значение текстового поля из переменной
+            document.getElementById('configCodeInput').value = currentConfigCode;
+
+            // Скрываем оверлей выбора языка
+            document.getElementById('languageOverlay').style.display = 'none';
+
+            // Отображаем основной контент
+            document.getElementById('mainContent').style.display = 'flex'; // Используем flex для центрирования содержимого
+
+            // Обновляем атрибут lang у html для доступности и других целей
+            document.documentElement.lang = lang;
+        }
+
+        // При загрузке страницы ничего не делаем, ждем выбора языка
+    </script>
+</body>
+</html>
