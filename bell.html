@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Последний звонок</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=PT+Sans:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* Общие стили для светлой темы */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            color: #333;
+        }
+        .header-wrapper {
+            background-color: #f0f0f0;
+            padding: 1rem;
+            transition: background-color 0.7s ease-in-out;
+        }
+        .header-bg {
+            background-color: #FF8C00;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, background-color 0.7s ease-in-out, border-color 0.7s ease-in-out;
+            border: 1px solid #cccccc;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header-bg:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        .header-bg h1 {
+            font-family: 'PT Sans', sans-serif;
+            font-weight: 700;
+            text-align: left;
+            text-transform: uppercase;
+            flex-grow: 1;
+            color: white;
+            font-size: 2.5rem;
+        }
+        .nav-buttons-container {
+            display: flex;
+            align-items: center;
+        }
+        .nav-button-header {
+            color: white;
+            padding: 0.5rem 0.75rem;
+            text-decoration: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: color 0.3s ease-in-out, transform 0.2s ease-in-out;
+            font-size: 1rem;
+        }
+        .nav-button-header:hover {
+            color: #e0e0e0;
+            transform: translateY(-2px);
+        }
+        .nav-button-header:first-child::after {
+            content: '|';
+            color: white;
+            margin-left: 1rem;
+            margin-right: 0.5rem;
+            font-weight: normal;
+        }
+
+        /* Стили для блоков контента (галерея, текстовый блок) */
+        .content-section-backing {
+            background-color: #e8e8e8;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid #cccccc;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, background-color 0.7s ease-in-out, border-color 0.7s ease-in-out;
+            padding: 1rem 2rem;
+            box-sizing: border-box;
+        }
+        .content-section-backing:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            font-size: 2.25rem;
+        }
+        h3 {
+            font-size: 1.5rem;
+        }
+        p {
+            font-size: 1rem;
+        }
+
+        /* Стили галереи изображений */
+        .image-gallery {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+        .image-gallery-inner {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            gap: 1rem;
+            width: 100%;
+            align-items: center;
+        }
+        .image-slot {
+            flex-shrink: 0;
+            flex-grow: 0;
+            flex-basis: calc((100% - 2 * 1rem) / 3);
+            height: 198px; /* Фиксированная высота для всех слотов */
+            background-color: #000;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer; /* Добавлено для указания на интерактивность */
+        }
+        .image-slot img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain; /* Изображение вписывается, сохраняя пропорции */
+            border-radius: 0.5rem;
+        }
+        .nav-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 0.5rem 0.75rem;
+            border-radius: 9999px;
+            cursor: pointer;
+            user-select: none;
+            font-size: 1.5rem;
+            line-height: 1;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 2.5rem;
+            height: 2.5rem;
+        }
+        .nav-button:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        .prev-button {
+            left: 0.5rem;
+        }
+        .next-button {
+            right: 0.5rem;
+        }
+
+        /* Кнопка переключения темы */
+        .theme-toggle-button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: auto;
+            padding-bottom: 2rem;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            z-index: 1;
+        }
+        .theme-toggle-button-container.visible {
+            opacity: 1;
+        }
+        .theme-toggle-button {
+            background-color: #FF8C00;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .theme-toggle-button:hover {
+            background-color: #e67e00;
+            transform: translateY(-2px);
+        }
+
+        /* Оверлей для анимации смены темы */
+        .theme-transition-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 9999;
+            background-color: transparent;
+            clip-path: circle(0% at var(--clip-x, center) var(--clip-y, center));
+            transition: clip-path 1.0s ease-in-out;
+            pointer-events: none;
+        }
+
+        .theme-transition-overlay.animate-in {
+            clip-path: circle(200% at var(--clip-x) var(--clip-y));
+            pointer-events: auto;
+        }
+
+        /* Стили темной темы (черно-оранжевые) */
+        body.dark-theme {
+            background-color: #0a0a0a;
+            color: #f0f0f0;
+        }
+        body.dark-theme .header-wrapper {
+            background-color: #0a0a0a;
+        }
+        body.dark-theme .header-bg {
+            background-color: #201810;
+            box-shadow: 0 4px 12px rgba(255, 140, 0, 0.2);
+            border-color: #FF8C00;
+        }
+        body.dark-theme .header-bg:hover {
+            box-shadow: 0 8px 20px rgba(255, 140, 0, 0.4);
+        }
+        body.dark-theme .header-bg h1 {
+            color: #f0f0f0;
+        }
+        body.dark-theme .nav-button-header {
+            color: #f0f0f0;
+        }
+        body.dark-theme .nav-button-header:hover {
+            color: #FF8C00;
+        }
+        body.dark-theme .nav-button-header:first-child::after {
+            color: #FF8C00;
+        }
+        body.dark-theme .content-section-backing {
+            background-color: #201810;
+            box-shadow: 0 4px 12px rgba(255, 140, 0, 0.1);
+            border-color: #FF8C00;
+        }
+        body.dark-theme .content-section-backing:hover {
+            box-shadow: 0 8px 20px rgba(255, 140, 0, 0.2);
+        }
+        body.dark-theme h2,
+        body.dark-theme h3 {
+            color: #f0f0f0;
+        }
+        body.dark-theme p {
+            color: #ccc;
+        }
+        body.dark-theme .image-slot {
+            background-color: #000;
+        }
+        body.dark-theme .nav-button {
+            background-color: rgba(255, 140, 0, 0.3);
+            color: white;
+        }
+        body.dark-theme .nav-button:hover {
+            background-color: rgba(255, 140, 0, 0.5);
+        }
+        body.dark-theme .theme-toggle-button {
+            background-color: #FF8C00;
+            color: white;
+        }
+        body.dark-theme .theme-toggle-button:hover {
+            background-color: #e67e00;
+        }
+
+        /* Стили для лайтбокса */
+        .lightbox-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8); /* Полупрозрачный черный фон */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000; /* Выше всех остальных элементов */
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+        }
+        .lightbox-overlay.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        .lightbox-content {
+            max-width: 90%; /* Максимальная ширина изображения */
+            max-height: 90%; /* Максимальная высота изображения */
+            object-fit: contain; /* Изображение вписывается, не обрезаясь */
+            border-radius: 0.5rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+        }
+
+
+        /* Адаптация для мобильных устройств */
+        @media (max-width: 768px) {
+            .header-bg {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 0.75rem;
+            }
+            .header-bg h1 {
+                font-size: 1.75rem;
+                margin-bottom: 0.5rem;
+            }
+            .nav-buttons-container {
+                width: 100%;
+                justify-content: flex-start;
+                gap: 0;
+            }
+            .nav-button-header {
+                font-size: 0.875rem;
+                padding: 0.4rem 0.6rem;
+            }
+            .nav-button-header:first-child::after {
+                margin-left: 0.5rem;
+                margin-right: 0.25rem;
+            }
+            .content-section-backing {
+                padding: 0.75rem;
+            }
+            h2 {
+                font-size: 1.75rem;
+            }
+            h3 {
+                font-size: 1.25rem;
+            }
+            p {
+                font-size: 0.9rem;
+            }
+            .image-slot {
+                flex-basis: 100%;
+                height: 180px;
+            }
+            .image-gallery-inner {
+                gap: 0.5rem;
+            }
+            .nav-button {
+                width: 2rem;
+                height: 2rem;
+                font-size: 1.25rem;
+            }
+            .theme-toggle-button-container {
+                padding-bottom: 1rem;
+            }
+            .theme-toggle-button {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen bg-gray-100">
+
+    <div class="header-wrapper">
+        <header class="header-bg mb-8 mx-auto max-w-6xl">
+            <h1 class="text-white font-bold tracking-wide py-2">
+                Последний звонок
+            </h1>
+            <div class="nav-buttons-container">
+                <a href="https://lenorio.ru" class="nav-button-header" target="_blank" rel="noopener noreferrer">Главная</a>
+                <a href="https://t.me/lenorio" class="nav-button-header" target="_blank" rel="noopener noreferrer">Написать</a>
+            </div>
+        </header>
+    </div>
+
+
+    <main class="flex-grow container mx-auto px-4 py-8">
+        <h2 class="font-extrabold text-gray-900 mb-8 text-center">
+            Наши совместные фотографии
+        </h2>
+
+        <section class="image-gallery content-section-backing relative mx-auto max-w-6xl mb-8">
+            <div class="image-gallery-inner" id="gallery-inner">
+                </div>
+
+            <button class="nav-button prev-button" id="prev-button">&#10094;</button>
+            <button class="nav-button next-button" id="next-button">&#10095;</button>
+        </section>
+
+        <section class="text-section content-section-backing relative mx-auto max-w-6xl mb-8 py-8 px-8">
+            <h3 class="font-bold text-gray-800 mb-4 text-center">
+                Обращение к родителям!
+            </h3>
+            <p class="text-gray-700 leading-relaxed text-center">
+                Мама и Папа, вот и настал этот день - Мой последний звонок. Скоро мне уезжать, поступать. Я подумал что обычные фотографии - не особо долго у нас сохранятся, поэтому решил сделать это в форме сайта, который явно будет храниться у нас дольше чем фотографии. Я хочу сказать что после того, как я поступлю мне будет очень не хватать вас, я несомненно буду скучать, надеюсь что вы не держите на меня никаких обид. "Без разногласий нет согласия". 
+            </p>
+        </section>
+    </main>
+
+    <div id="theme-toggle-button-container" class="theme-toggle-button-container">
+        <button id="theme-toggle-button" class="theme-toggle-button">
+            Сменить тему на черную
+        </button>
+    </div>
+
+    <div id="theme-transition-overlay" class="theme-transition-overlay"></div>
+
+    <div id="lightbox-overlay" class="lightbox-overlay">
+        <img src="" alt="Full size image" class="lightbox-content" id="lightbox-image">
+    </div>
+
+    <script>
+        // Получаем ссылки на элементы DOM
+        const galleryInner = document.getElementById('gallery-inner');
+        const prevButton = document.getElementById('prev-button');
+        const nextButton = document.getElementById('next-button');
+        const themeToggleButton = document.getElementById('theme-toggle-button');
+        const themeToggleButtonContainer = document.getElementById('theme-toggle-button-container');
+        const body = document.body;
+        const themeTransitionOverlay = document.getElementById('theme-transition-overlay');
+        const lightboxOverlay = document.getElementById('lightbox-overlay');
+        const lightboxImage = document.getElementById('lightbox-image');
+
+        // Список изображений для галереи
+        const images = [
+            'bell/media1.jpg',
+            'https://placehold.co/1600x900/000000/FFFFFF?text=16:9+Фото',
+            'bell/media2.jpg',
+            'https://placehold.co/800x800/000000/FFFFFF?text=Квадратное+Фото',
+            'bell/media3.jpg',
+            'https://placehold.co/900x1600/000000/FFFFFF?text=9:16+Фото',
+            'bell/media4.jpg',
+            'https://placehold.co/1200x600/000000/FFFFFF?text=2:1+Фото',
+            'bell/media5.jpg',
+            'bell/media6.jpg',
+            'bell/media7.jpg'
+        ];
+
+        let currentImageIndex = 0;
+        // Определяем, сколько изображений показывать в зависимости от ширины экрана
+        let visibleImagesCount = window.innerWidth <= 768 ? 1 : 3;
+
+        /**
+         * Загружает изображения в галерею и добавляет обработчик клика для лайтбокса.
+         */
+        function loadGalleryImages() {
+            galleryInner.innerHTML = ''; // Очищаем галерею перед загрузкой
+            images.forEach((src, index) => {
+                const imageSlot = document.createElement('div');
+                imageSlot.classList.add('image-slot');
+
+                const img = document.createElement('img');
+                img.src = src;
+                img.alt = `Фото ${index + 1}`;
+                // Запасной вариант для изображений, которые не удалось загрузить
+                img.onerror = () => {
+                    img.src = `https://placehold.co/1000x600/FFFFFF/000000?text=Ошибка+загрузки`;
+                };
+                imageSlot.appendChild(img);
+                galleryInner.appendChild(imageSlot);
+
+                // Добавляем обработчик клика для открытия лайтбокса
+                img.addEventListener('click', () => {
+                    lightboxImage.src = img.src; // Устанавливаем источник изображения в лайтбоксе
+                    lightboxOverlay.classList.add('visible'); // Показываем лайтбокс
+                    body.style.overflow = 'hidden'; // Запрещаем прокрутку страницы
+                });
+            });
+            updateGalleryPosition(); // Обновляем позицию после загрузки
+            updateNavButtonVisibility(); // Проверяем видимость кнопок
+        }
+
+        /**
+         * Обновляет позицию галереи для прокрутки.
+         */
+        function updateGalleryPosition() {
+            if (galleryInner.children.length === 0) return;
+
+            // Вычисляем ширину одного слота с учетом отступа между ними
+            const gap = window.innerWidth <= 768 ? 8 : 16; // Отступ в пикселях
+            const slotWidth = galleryInner.children[0].offsetWidth + gap;
+            const transformValue = -currentImageIndex * slotWidth;
+
+            galleryInner.style.transform = `translateX(${transformValue}px)`;
+        }
+
+        /**
+         * Переключает видимость кнопок навигации.
+         */
+        function updateNavButtonVisibility() {
+            // Кнопки нужны только если изображений больше, чем может быть показано одновременно
+            if (images.length <= visibleImagesCount) {
+                prevButton.style.display = 'none';
+                nextButton.style.display = 'none';
+            } else {
+                prevButton.style.display = 'flex';
+                nextButton.style.display = 'flex';
+            }
+        }
+
+        /**
+         * Применяет выбранную тему к странице.
+         * @param {string} theme - 'light' или 'dark'.
+         */
+        function applySiteTheme(theme) {
+            if (theme === 'dark') {
+                body.classList.add('dark-theme');
+                themeToggleButton.textContent = 'Сменить тему на светлую';
+            } else {
+                body.classList.remove('dark-theme');
+                themeToggleButton.textContent = 'Сменить тему на черную';
+            }
+        }
+
+        // Проверяем сохраненные настройки темы при загрузке
+        const savedThemePreference = localStorage.getItem('theme');
+        if (savedThemePreference) {
+            applySiteTheme(savedThemePreference);
+        } else {
+            // По умолчанию светлая тема, если нет сохраненных настроек
+            applySiteTheme('light');
+        }
+
+        // Обработчик клика по кнопке смены темы
+        themeToggleButton.addEventListener('click', (event) => {
+            const isDarkThemeActive = body.classList.contains('dark-theme');
+            const newTheme = isDarkThemeActive ? 'light' : 'dark';
+
+            // Получаем координаты клика для начала анимации
+            const clickX = event.clientX;
+            const clickY = event.clientY;
+
+            // Устанавливаем цвет оверлея в соответствии с новой темой
+            themeTransitionOverlay.style.backgroundColor = newTheme === 'dark' ? '#0a0a0a' : '#f0f0f0';
+            themeTransitionOverlay.style.setProperty('--clip-x', `${clickX}px`);
+            themeTransitionOverlay.style.setProperty('--clip-y', `${clickY}px`);
+
+            // Запускаем анимацию
+            themeTransitionOverlay.classList.add('animate-in');
+            themeTransitionOverlay.style.pointerEvents = 'auto'; // Блокируем клики во время анимации
+
+            // После завершения анимации применяем тему и сбрасываем оверлей
+            setTimeout(() => {
+                applySiteTheme(newTheme); // Применяем тему к body
+                localStorage.setItem('theme', newTheme); // Сохраняем выбор
+
+                themeTransitionOverlay.classList.remove('animate-in');
+                themeTransitionOverlay.style.pointerEvents = 'none'; // Снова разрешаем клики
+
+                // Принудительный пересчет стилей для сброса clip-path
+                void themeTransitionOverlay.offsetWidth;
+
+                // Сбрасываем clip-path для следующей анимации
+                themeTransitionOverlay.style.clipPath = 'circle(0% at var(--clip-x, center) var(--clip-y, center))';
+            }, 1000); // Длительность анимации (1 секунда)
+        });
+
+        /**
+         * Проверяет позицию прокрутки и показывает/скрывает кнопку темы.
+         */
+        function checkScrollPosition() {
+            // Порог прокрутки (50px до конца страницы)
+            const scrollThreshold = document.documentElement.scrollHeight - window.innerHeight - 50;
+            if (window.scrollY >= scrollThreshold) {
+                themeToggleButtonContainer.classList.add('visible');
+            } else {
+                themeToggleButtonContainer.classList.remove('visible');
+            }
+        }
+
+        // Обработчики событий навигации по галерее
+        prevButton.addEventListener('click', () => {
+            if (images.length > visibleImagesCount) {
+                currentImageIndex = (currentImageIndex > 0) ? currentImageIndex - 1 : images.length - visibleImagesCount;
+                updateGalleryPosition();
+            }
+        });
+
+        nextButton.addEventListener('click', () => {
+            if (images.length > visibleImagesCount) {
+                currentImageIndex = (currentImageIndex < images.length - visibleImagesCount) ? currentImageIndex + 1 : 0;
+                updateGalleryPosition();
+            }
+        });
+
+        // Обработчик клика по оверлею лайтбокса для закрытия
+        lightboxOverlay.addEventListener('click', () => {
+            lightboxOverlay.classList.remove('visible'); // Скрываем лайтбокс
+            body.style.overflow = ''; // Разрешаем прокрутку страницы
+        });
+
+        // Инициализация при загрузке страницы
+        window.onload = () => {
+            loadGalleryImages();
+            checkScrollPosition(); // Проверяем позицию прокрутки при загрузке
+        };
+
+        // Обновление при изменении размера окна
+        window.onresize = () => {
+            visibleImagesCount = window.innerWidth <= 768 ? 1 : 3;
+            updateGalleryPosition();
+            updateNavButtonVisibility();
+            checkScrollPosition(); // Проверяем позицию прокрутки при изменении размера
+        };
+    </script>
+</body>
+</html>
