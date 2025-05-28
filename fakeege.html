@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="icon" href="data:image/gif;base64,R0lGODlhEAAQAPeSAAB7zQBesgBvugRzvP8FANnq9e/2+wBmtrza7fD3+6/S6q7S6iyFxgB0yytjoSpjov4GCQFwui6Cv/YaH/cZHQBfs/X6/Pb6/a7S6eny+P8AAq92kP8LAwCD2wR90prF5BRPldQmNQBltQCB1v8QECKDxA1yvv8UFqLL5tW6xyyExJjF4jJjoecdJpoiQtmir/gnK0CWzQBcsQBwudOUoi1gnb3Z7c8+Tlmazj+Qytpuev4BBPgZH0GRyrTV68tdbr/c7sbf8FeazgB0vNLS4AByvN6nscyuvXOx2gBUrYi938ZtgAB8zgBwuMjh8Mnh8AB3xejy+TqSysqRoQB3xPUaH/wAAKGMqSaGxTmRyrva7e31+segstvr9QV0vb7b7f7+/7vZ7QB8z9eAjPQwNLjX7M+CkFmn3PD6/s5sep/K5fcLEM3k8vAAANvd6O3q7wBasAB2xLrY7PD3+gBjvfQaIL7b7tK9yo/C4dgqOABtud47R/gAABd4vvIYHmOm1QBZsABTrUWVzXCcxwRasABktL0qPNYSIb3a7Y7L7NZLWv8CABJUmgBKqYK63gBsyP8AAP///////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH/C1hNUCBEYXRhWE1QPD94cGFja2V0IGJlZ2luPSJvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXBrdD0iQWRvYmUgWE1QIENvcmUgNS4zLWMwMDcgMS4xNDQxMDksIDIwMTEvMDkvMjAtMTg6MDk6MTAgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My4org/1999/02/22-rdf-syntax-ns#I+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFBob3Rvc2hvcCBDUzYgKDEzLjAyMDExMTAxMi5tLjI1OCAyMDExLzEwLzEyOjIxOjAwOjAwKSAgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjI5MzQwNERBNEM2NTExRTM5RkY1RTE3MUM5OEI2QjE1IiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjI5MzQwNERCNEM2NTExRTM5RkY1RTE3MUM5OEI2QjE1Ij4gPHhtcE1NOkRlcml2ZWRGZnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjI5MzQwNERBNEM2NTExRTM5RkY1RTE3MUM5OEI2QjE1IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjI5MzQwNERCMEM2NTExRTM5RkY1RTE3MUM5OEI2QjE1Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj4B//79/Pv6+fj39vX08/Lx8O/u7ezr6uno5+bl5OPi4eDf3t3c29rZ2NfW1dTT0tHQz87NzMvKycjHxsXEw8LBwL++vby7urm4t7a1tLOysbCvrq2sq6qpqKempaSjoqGgn56dnJuamZiXlpWUk5KRkI+OjYyLiomIh4aFhIOCgYB/fn18e3p5eHd2dXRzcnFwb25tbGtqaWhnZmVkY2JhYF9eXVxbWllYV1ZVVFNSUVBPTk1MS0pJSEdGRURDQkFAPz49PDs6OTg3NjU0MzIxMC8uLSwrKikoJyYlJCMiISAfHh0cGxoZGBcWFRQTEhEQDw4NDAsKCQgHBgUEAwIBAAAh+QQBAACSACwAAAAAEAAQAAAI2AAlCRxIsCDBBVoKJPgjBM2bNFwKsjEQaUuJQHQkwIDE5w7BLpFCeoHTgBEBDpCMCFQQ5gsGFB8cqWCQaIOLJURSHJETqYASQIRy4FkhyEOHK2Qg7SkT0kKEAwcGDCgUh8qhRTsUqQmZQECSIQL0NBkBIAQJSDeeILgAJkiPCkVmMGFhyM+aMW4EIgoZqY8IKCZaEIDwgyACvjFkiKlxoo6GKQSd8JUSAIADClWsmCEIhG+Wyg8m8GjzgqABOyGxNHoEAhKkPHMKRvFhAwmOM4N00MhgsLfBgAA7">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta charset="utf-8">
+    <title>Проверить результаты ЕГЭ / Официальный информационный портал единого государственного экзамена (ЕГЭ 2025)</title>
+
+    <style>
+        /* Общие стили */
+        body, html { height: 100%; margin: 0; padding: 0; font-size: 14px; font-family: Verdana, Arial, Helvetica, sans-serif; background-color: #d2d8ee; background-image: linear-gradient(to bottom, #e6eaf6, #d2d8ee); background-repeat: no-repeat; }
+        .bold, .heading { font-weight: 700; }
+        .clearfix:after, .fl-right { clear: both; }
+        .header_text-2, .heading-1, .heading-2, button, h1, h2 { text-transform: uppercase; }
+        .heading, .heading-1, .heading-2, .heading-3, .heading-4, .heading-5, .heading-6, h1 { font-family: Calibri, Helvetica, sans-serif; }
+        .border-box { box-sizing: border-box; }
+        .clearfix:after, .clearfix:before { content: " "; display: table; }
+        .mb-10 { margin-bottom: 10px; }
+        .mb-15 { margin-bottom: 15px; }
+        .mb-20 { margin-bottom: 20px; }
+        .heading-5, h5 { margin-bottom: 10px; }
+        .green { color: green; }
+        .red, p.red { color: red; }
+        .hidden { display: none !important; }
+        body.empty .page, iframe { display: none; }
+        .break-all { word-break: break-all; }
+        .heading { margin-top: 0; }
+        * + .heading { margin-top: .83em; }
+        .heading-1, .heading-2, .heading-3, .heading-4, .heading-5, .heading-6, h1, h2, h3, h4, h5, h6 { margin-top: 0; font-weight: 700; }
+        .heading-1 { font-size: 28px; }
+        .heading-2 { font-size: 24px; }
+        .heading-3 { font-size: 22px; }
+        .heading-4 { font-size: 18px; }
+        .heading-5 { font-size: 16px; }
+        .heading-6 { font-size: 14px; }
+        h1 { font-size: 28px; }
+        .header_text, h2 { font-size: 24px; font-family: Calibri, Helvetica, sans-serif; }
+        h3 { font-family: Calibri, Helvetica, sans-serif; font-size: 22px; }
+        h4 { font-family: Calibri, Helvetica, sans-serif; font-size: 18px; }
+        h5 { font-family: Calibri, Helvetica, sans-serif; font-size: 16px; }
+        h6 { font-family: Calibri, Helvetica, sans-serif; font-size: 14px; }
+        p { font-size: 11px; line-height: 1.5; margin: 0; }
+        .header_text-1, footer { color: #949699; }
+        p.size-l { font-size: 12px; }
+        body.empty { background: 0 0; }
+        .page { min-height: 100%; width: 1000px; margin: 0 auto; padding-bottom: 180px; background: #fff; position: relative; box-shadow: 0 0 30px rgba(0, 0, 0, .3); -moz-box-shadow: 0 0 30px rgba(0, 0, 0, .3); -webkit-box-shadow: 0 0 30px rgba(0, 0, 0, .3); box-sizing: border-box; }
+        .dock, .header_bar, .header_content, .header_logo, .header_text, footer { position: absolute; }
+        .dock { left: 0; right: 0; }
+        header { height: 188px; }
+        .header_bar { left: 0; right: 0; height: 38px; top: 0; background: #f2f2f2; }
+        .header_content { left: 0; right: 0; height: 150px; top: 38px; }
+        .header_logo { width: 138px; height: 50px; background: url(data:image/gif;base64,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) no-repeat;left:30px;top:45px}
+        .header_text { left: 210px; top: 40px; line-height: 32px; }
+        .header_text-2 { font-weight: 700; }
+        footer { background: #f2f2f2; height: 150px; left: 0; right: 0; bottom: 0; border-top: 1px solid #d5d6d6; font-size: 12px; text-align: center; box-sizing: border-box; padding-top: 18px; }
+        .content { padding: 20px 32px; border-top: 1px solid #bebfc1; }
+        .fl-right { float: right; }
+        .container.loading::before { width: 40px; height: 40px; animation: spin 1s linear infinite; border-radius: 100%; border-top: 2px solid #545a6a; border-bottom: 2px solid #d4d4db; border-left: 2px solid #545a6a; border-right: 2px solid #d4d4db; opacity: .7; content: ''; display: block; margin: 50px auto; }
+        .input-clone, input[type=text], input[type=password], input[type=search], select, textarea { margin: 0; padding: 4px 6px; font-size: 20px; border: 1px solid #c7c8ca; background: #fcfcfc; box-sizing: border-box; font-family: inherit; }
+        .dataTables_length select, button { font-size: 14px; }
+        .input-clone.error, input[type=text].error, input[type=password].error, input[type=search].error, select.error, textarea.error { box-shadow: 0 0 1px 1px #f1604f; border-color: #ED3520; outline-color: #ED3520; }
+        .input-clone[disabled], input[type=text][disabled], input[type=password][disabled], input[type=search][disabled], select[disabled], textarea[disabled] { background: #D8D8D8; }
+        button { border: none; background: #0071bb; color: #fff; font-weight: 700; padding: 14px 20px; outline: 0; cursor: pointer; }
+        button[disabled] { cursor: default; background: rgba(0, 113, 187, .7); color: rgba(255, 255, 255, .7); }
+        button:hover:not([disabled]) { background: #0080d4; }
+        button:active:not([disabled]) { background: #0062a2; }
+        button.btn-small { font-size: 11px; padding: 8px 10px; }
+        a, button.btn-m { font-size: 12px; }
+        button.btn-m { padding: 9px 14px; }
+        button.btn-light { color: #585858; background: #E4E4E4; }
+        button.btn-light:hover:not([disabled]) { background: #f1f1f1; }
+        button.btn-light:active:not([disabled]) { background: #d7d7d7; }
+        a { color: #0071bb; }
+        a:hover { color: #00436e; }
+        .animation-spin 0% { transform: rotate(0); -webkit-transform: rotate(0); -moz-transform: rotate(0); -o-transform: rotate(0); }
+        .animation-spin 100% { transform: rotate(359deg); -webkit-transform: rotate(359deg); -moz-transform: rotate(359deg); -o-transform: rotate(359deg); }
+        @keyframes spin { 0% { transform: rotate(0); -webkit-transform: rotate(0); -moz-transform: rotate(0); -o-transform: rotate(0); } 100% { transform: rotate(359deg); -webkit-transform: rotate(359deg); -moz-transform: rotate(359deg); -o-transform: rotate(359deg); } }
+        .table { width: 100%; table-layout: fixed; border-collapse: collapse; font-size: 13px; }
+        .table td, .table th { border: 1px solid #C2C2C2; text-align: center; vertical-align: center; }
+        .table tfoot td, .table th { font-weight: 700; padding: 8px 11px; background-color: #dae1f7; }
+        .table tfoot td a, .table th a { font-weight: 400; font-size: 11px; }
+        .table .sub-head th { font-weight: 400; }
+        .table td { padding: 11px; }
+        .table tr.odd { background: #f2f2f2; }
+        .table tr:hover td:not([rowspan]) { background: #dadada; }
+        .table .width-220 { width: 220px; }
+        .table .width-180 { width: 180px; }
+        .table .width-120 { width: 120px; }
+        .table .width-110 { width: 110px; }
+        .table .width-80 { width: 80px; }
+        .table .width-60 { width: 60px; }
+        .table .width-40 { width: 40px; }
+        .table .width-20 { width: 20px; }
+        .table td.align-right { text-align: right; }
+        .kege-item td, .notice, .table td.align-left, .table td.input-cell { text-align: left; }
+        .table td.no-padding { padding-top: 0; padding-bottom: 0; }
+        .table td.input-cell { padding: 0; }
+        .table td.input-cell input { width: 100%; box-sizing: border-box; padding: 5px; height: 30px; line-height: 30px; background: 0 0; border: none; font-size: 13px; }
+        .table_cells-s td { padding: 5px; }
+        .kege-item > thead { display: none; }
+        .kege-item td { height: 14px; }
+        .table-subscript { text-align: right; font-style: italic; font-size: 12px; }
+        .table-container { position: relative; overflow: auto; width: 100%; min-height: 100px; text-align: center; }
+        .table-container.loading::after, .table-container.loading::before { content: ''; position: absolute; left: 0; right: 0; }
+        .table-container.loading::before { top: 0; bottom: 0; background: rgba(255, 255, 255, .5); }
+        .table-container.loading::after { width: 40px; height: 40px; animation: spin 1s linear infinite; border-radius: 100%; border-top: 2px solid #545a6a; border-bottom: 2px solid #d4d4db; border-left: 2px solid #545a6a; border-right: 2px solid #d4d4db; opacity: .7; display: block; margin: 0 auto; top: 40%; }
+        .dataTables_length { margin-bottom: 10px; }
+        .account-block { float: right; font-size: 22px; }
+        .account-block a { font-size: 24px; }
+        .loader { display: inline-block; }
+        .loader_bar { background-color: #FFF; width: 5px; height: 10px; float: right; margin-right: 3px; opacity: .7; }
+        .loader_bar:first-child { -webkit-animation: loadbars 1s cubic-bezier(.645, .045, .355, 1) infinite 0s; }
+        .loader_bar:nth-child(2) { -webkit-animation: loadbars 1s ease-in-out infinite -.2s; }
+        .loader_bar:nth-child(3) { -webkit-animation: loadbars 1s ease-in-out infinite -.4s; }
+        .btn-m .loader_bar { width: 3px; height: 7px; margin-right: 2px; }
+        .btn-m .loader_bar:first-child { -webkit-animation: loadbars_small 1s cubic-bezier(.645, .045, .355, 1) infinite 0s; }
+        .btn-m .loader_bar:nth-child(2) { -webkit-animation: loadbars_small 1s ease-in-out infinite -.2s; }
+        .btn-m .loader_bar:nth-child(3) { -webkit-animation: loadbars_small 1s ease-in-out infinite -.4s; }
+        .table-container .loader { margin-top: 30px; }
+        .table-container .loader_bar { background-color: #437CEC; }
+        .notice { width: 100%; font-size: 12px; background-color: #fff0f0; color: #C31612; padding: 15px; line-height: 1.5; border: 1px solid #ef504c; box-sizing: border-box; }
+        .notice h5 { margin-bottom: 5px; }
+        .notice.warning { background-color: #fff8db; color: #b58105; border-color: #F5C248; }
+        .notice-tag { float: right; background: #F5C248; padding: 5px 15px; color: #483300; margin-top: -15px; margin-right: -15px; }
+
+        /* Стили для новой панели управления */
+        .controls-panel {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #c7c8ca;
+            background: #fcfcfc;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: flex-start;
+        }
+
+        .controls-panel label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .controls-panel select,
+        .controls-panel input[type="number"],
+        .controls-panel input[type="text"] { /* Добавляем стили для текстового поля */
+            width: 250px; /* Фиксированная ширина для полей ввода */
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #c7c8ca;
+            border-radius: 4px;
+        }
+
+        .controls-panel button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <header>
+            <div class="header_bar"></div>
+            <div class="header_content">
+                <div class="header_logo"></div>
+                <div class="header_text">
+                    <div class="header_text-1">Официальный информационный портал</div>
+                    <div class="header_text-2">Единого государственного экзамена</div>
+                </div>
+            </div>
+        </header>
+        <div class="content">
+            <div id="rcoi-msg">
+                <div class="notice warning mb-20">
+                    <h5>Информация от РЦОИ</h5>
+                    <div>
+                        ВНИМАНИЕ!!! Уважаемые участники ЕГЭ! Если у экзамена статус "Результат скрыт", значит результаты находятся на утверждении государственной экзаменационной комиссией Иркутской области и будут опубликованы не позднее сроков, указанных в графике обработки экзаменационных материалов (https://obrnadzor.gov.ru/wp-content/uploads/2024/05/grafik-obrabotki-ekzamenaczionnyh-rabot-osnovnogo-perioda-gia-11.pdf). Просим ориентироваться на срок в графе "Официальный срок объявления результатов ГИА-11 на региональном уровне".
+                    </div>
+                </div>
+            </div>
+            <div class="account-block">
+                <span id="username">Фамилия И.О.</span> <a href="#" id="logout">Выход</a>
+            </div>
+            <h3>Ваши результаты ЕГЭ</h3>
+
+            <div class="mb-20">
+                <a href="https://obrnadzor.gov.ru/gia/gia-11/raspisanie-gia-11/" target="_blank">График публикации результатов экзаменов</a>
+            </div>
+            <div id="table-container" class="table-container">
+                <table class="table mb-20">
+                    <thead>
+                        <tr>
+                            <th class="width-110">Дата экзамена</th>
+                            <th>Предмет</th>
+                            <th class="width-110">Тестовый балл</th>
+                            <th class="width-110">Минимальный балл</th>
+                            <th>Статус экзамена</th>
+                            <th class="width-110">Апелляция</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="odd" data-exam-id="1">
+                            <td class="date-cell">04.12.2024</td>
+                            <td class="subject-cell"><a href="https://checkege.rustest.ru/exams/178">Сочинение</a></td>
+                            <td class="score-cell"><span class="bold green">зачёт</span></td>
+                            <td class="min-score-cell"></td>
+                            <td class="status-cell">Оценённый результат</td>
+                            <td>нет</td>
+                        </tr>
+                        <tr data-exam-id="2">
+                            <td class="date-cell"></td>
+                            <td class="subject-cell"></td>
+                            <td class="score-cell"></td>
+                            <td class="min-score-cell"></td>
+                            <td class="status-cell">Нет результата</td>
+                            <td class="appeal-cell">Нет</td> </tr>
+                        <tr class="odd" data-exam-id="3">
+                            <td class="date-cell"></td>
+                            <td class="subject-cell"></td>
+                            <td class="score-cell"></td>
+                            <td class="min-score-cell"></td>
+                            <td class="status-cell">Нет результата</td>
+                            <td class="appeal-cell">Нет</td> </tr>
+                        <tr data-exam-id="4">
+                            <td class="date-cell"></td>
+                            <td class="subject-cell"></td>
+                            <td class="score-cell"></td>
+                            <td class="min-score-cell"></td>
+                            <td class="status-cell">Нет результата</td>
+                            <td class="appeal-cell">Нет</td> </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="controls-panel">
+                <h4>Управление ФИО</h4>
+                <div>
+                    <label for="fio-input">Введите ФИО:</label>
+                    <input type="text" id="fio-input" placeholder="Фамилия И.О." value="Фамилия И.О.">
+                </div>
+                <button id="apply-fio-btn">Применить ФИО</button>
+
+                <hr style="width:100%; border-top: 1px solid #ccc; margin: 15px 0;">
+
+                <h4>Управление результатами</h4>
+                <div>
+                    <label for="exam-row-select">Выберите экзамен (строку):</label>
+                    <select id="exam-row-select">
+                        <option value="">-- Выберите строку --</option>
+                        <option value="2">Экзамен #2</option>
+                        <option value="3">Экзамен #3</option>
+                        <option value="4">Экзамен #4</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="subject-select">Выберите предмет:</label>
+                    <select id="subject-select">
+                        <option value="">-- Выберите предмет --</option>
+                        </select>
+                </div>
+                <div>
+                    <label for="date-select">Выберите дату:</label>
+                    <select id="date-select">
+                        <option value="">-- Выберите дату --</option>
+                        </select>
+                </div>
+                <div>
+                    <label for="score-input">Введите тестовый балл:</label>
+                    <input type="number" id="score-input" min="0" max="100" placeholder="Балл">
+                </div>
+                <button id="apply-changes-btn">Применить изменения</button>
+            </div>
+
+            <p class="red">
+                Внимание!
+            </p>
+            <p class="mb-15">
+                В случае если:<br>
+                — напротив предмета установлен статус «Результат скрыт»<br>
+                — напротив предмета установлен статус «Экзамен обработан» и при этом значение тестового балла пустое <br>
+                Вам необходимо обратиться в РЦОИ Вашего региона для получения результатов.
+            </p>
+            <p class="red">
+                Обращаем Ваше внимание, что результаты ЕГЭ могут быть изменены в связи с проведением процедур апелляции и/или перепроверок результатов на региональном и федеральном уровнях. Рекомендуем осуществлять периодические повторные проверки Ваших результатов ЕГЭ.
+            </p>
+        </div>
+        <footer>
+            <div>
+                © 2001-<span id="current-year">2025</span> Федеральная служба по надзору в сфере образования и науки
+            </div>
+            <div>
+                При использовании материалов портала ЕГЭ на внешних Интернет-ресурсах ссылка на <a href="http://obrnadzor.gov.ru/" target="_blank">первоисточник</a> обязательна
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Устанавливаем текущий год в футере
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+
+            // Определяем минимальные баллы для разных предметов
+            const minScores = {
+                "История": 32,
+                "Литература": 32,
+                "Химия": 36,
+                "ЕГЭ по математике базового уровня": 3, // Условный балл для базовой математики
+                "ЕГЭ по математике профильного уровня": 27,
+                "Русский язык": 36,
+                "Обществознание": 42,
+                "Физика": 36,
+                "Биология": 36,
+                "География": 37,
+                "Иностранные языки (английский, испанский, китайский, немецкий, французский) (письменная часть)": 22,
+                "Иностранные языки (английский, испанский, китайский, немецкий, французский) (устная часть)": 22,
+                "Информатика": 40
+            };
+
+            // Список всех доступных предметов и дат
+            const allSubjects = [
+                "История", "Литература", "Химия",
+                "ЕГЭ по математике базового уровня", "ЕГЭ по математике профильного уровня",
+                "Русский язык",
+                "Обществознание", "Физика",
+                "Биология", "География", "Иностранные языки (английский, испанский, китайский, немецкий, французский) (письменная часть)",
+                "Иностранные языки (английский, испанский, китайский, немецкий, французский) (устная часть)", "Информатика"
+            ];
+
+            const allDates = [
+                "23.05.2025", "26.05.2025", "27.05.2025", "29.05.2025", "30.05.2025",
+                "02.06.2025", "05.06.2025", "10.06.2025", "11.06.2025"
+            ];
+
+            // Получаем ссылки на элементы управления ФИО
+            const fioInput = document.getElementById('fio-input');
+            const applyFioBtn = document.getElementById('apply-fio-btn');
+            const usernameSpan = document.getElementById('username');
+
+            // Получаем ссылки на элементы управления результатами
+            const examRowSelect = document.getElementById('exam-row-select');
+            const subjectSelect = document.getElementById('subject-select');
+            const dateSelect = document.getElementById('date-select');
+            const scoreInput = document.getElementById('score-input');
+            const applyChangesBtn = document.getElementById('apply-changes-btn');
+
+            // Функция для заполнения выпадающих списков
+            function populateSelect(selectElement, optionsArray) {
+                optionsArray.forEach(optionText => {
+                    const option = document.createElement('option');
+                    option.value = optionText;
+                    option.textContent = optionText;
+                    selectElement.appendChild(option);
+                });
+            }
+
+            // Заполняем выпадающие списки предметов и дат
+            populateSelect(subjectSelect, allSubjects);
+            populateSelect(dateSelect, allDates);
+
+            // Добавляем слушатель события 'click' для кнопки "Применить ФИО"
+            applyFioBtn.addEventListener('click', function() {
+                const newFio = fioInput.value.trim();
+                if (newFio) {
+                    usernameSpan.textContent = newFio;
+                } else {
+                    alert('Пожалуйста, введите ФИО.');
+                }
+            });
+
+            // Добавляем слушатель события 'click' для кнопки "Применить изменения"
+            applyChangesBtn.addEventListener('click', function() {
+                const selectedExamId = examRowSelect.value;
+                const newSubject = subjectSelect.value;
+                const newDate = dateSelect.value;
+                const score = parseInt(scoreInput.value, 10);
+
+                if (!selectedExamId) {
+                    alert('Пожалуйста, выберите номер экзамена (строку) для изменения.');
+                    return;
+                }
+                if (!newSubject) {
+                    alert('Пожалуйста, выберите предмет.');
+                    return;
+                }
+                if (!newDate) {
+                    alert('Пожалуйста, выберите дату.');
+                    return;
+                }
+                if (isNaN(score) || score < 0 || score > 100) {
+                    alert('Пожалуйста, введите действительный балл от 0 до 100.');
+                    return;
+                }
+
+                // Находим строку таблицы по выбранному ID экзамена
+                const targetRow = document.querySelector(`tr[data-exam-id="${selectedExamId}"]`);
+
+                if (targetRow) {
+                    const dateCell = targetRow.querySelector('.date-cell');
+                    const subjectCell = targetRow.querySelector('.subject-cell');
+                    const scoreCell = targetRow.querySelector('.score-cell');
+                    const minScoreCell = targetRow.querySelector('.min-score-cell');
+                    const statusCell = targetRow.querySelector('.status-cell');
+                    const appealCell = targetRow.querySelector('.appeal-cell'); // Получаем ячейку апелляции
+
+                    // Обновляем дату и предмет
+                    dateCell.textContent = newDate;
+                    subjectCell.textContent = newSubject;
+
+                    // Обновляем тестовый балл
+                    scoreCell.textContent = score;
+
+                    // Обновляем минимальный балл
+                    if (minScores[newSubject]) {
+                        minScoreCell.textContent = minScores[newSubject];
+                    } else {
+                        minScoreCell.textContent = ''; // Если минимальный балл не определен
+                    }
+
+                    // Обновляем статус экзамена
+                    statusCell.textContent = 'Оценённый результат';
+
+                    // Устанавливаем "Апелляция" в "Нет"
+                    appealCell.textContent = 'Нет';
+
+                    // Изменяем цвет балла в зависимости от минимального
+                    if (minScores[newSubject] !== undefined && !isNaN(minScores[newSubject])) {
+                        if (score >= minScores[newSubject]) {
+                            scoreCell.style.color = 'green';
+                        } else {
+                            scoreCell.style.color = 'red';
+                        }
+                    } else {
+                        scoreCell.style.color = ''; // Сбросить цвет, если минимальный балл не определен
+                    }
+                } else {
+                    alert('Строка для выбранного экзамена не найдена.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
