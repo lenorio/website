@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LENORIO VPN - Ваша Безопасность в Интернете</title>
+    <!-- Favicon: Internet Globe Icon (SVG from Font Awesome) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3C!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--%3E%3Cpath fill='%236366f1' d='M352 256c0 22.2-1.2 43.6-3.3 64l-185.3 0c-2.2-20.4-3.3-41.8-3.3-64s1.2-43.6 3.3-64l185.3 0c2.2 20.4 3.3 41.8 3.3 64zm28.8-64l123.1 0c5.3 20.5 8.1 41.9 8.1 64s-2.8 43.5-8.1 64l-123.1 0c2.1-20.6 3.2-42 3.2-64s-1.1-43.4-3.2-64zm112.6-32l-116.7 0c-10-63.9-29.8-117.4-55.3-151.6c78.3 20.7 142 77.5 171.9 151.6zm-149.1 0l-176.6 0c6.1-36.4 15.5-68.6 27-94.7c10.5-23.6 22.2-40.7 33.5-51.5C239.4 3.2 248.7 0 256 0s16.6 3.2 27.8 13.8c11.3 10.8 23 27.9 33.5 51.5c11.6 26 20.9 58.2 27 94.7zm-209 0L18.6 160C48.6 85.9 112.2 29.1 190.6 8.4C165.1 42.6 145.3 96.1 135.3 160zM8.1 192l123.1 0c-2.1 20.6-3.2 42-3.2 64s1.1 43.4 3.2 64L8.1 320C2.8 299.5 0 278.1 0 256s2.8-43.5 8.1-64zM194.7 446.6c-11.6-26-20.9-58.2-27-94.6l176.6 0c-6.1 36.4-15.5 68.6-27 94.6c-10.5 23.6-22.2 40.7-33.5 51.5C272.6 508.8 263.3 512 256 512s-16.6-3.2-27.8-13.8c-11.3-10.8-23 27.9-33.5 51.5zM135.3 352c10 63.9 29.8 117.4 55.3 151.6C112.2 482.9 48.6 426.1 18.6 352l116.7 0zm358.1 0c-30 74.1-93.6 130.9-171.9 151.6c25.5-34.2 45.2-87.7 55.3-151.6l116.7 0z'/%3E%3C/svg%3E">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* Light blue-gray background */
+        }
+        .gradient-button {
+            background: linear-gradient(to right, #6366f1, #8b5cf6); /* Purple to indigo gradient */
+            transition: all 0.3s ease;
+        }
+        .gradient-button:hover {
+            background: linear-gradient(to right, #8b5cf6, #6366f1);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(99, 102, 241, 0.4);
+        }
+        .feature-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        .price-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            /* Ensure cards have equal height */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .price-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        .contact-icon {
+            transition: transform 0.3s ease;
+        }
+        .contact-icon:hover {
+            transform: scale(1.1);
+        }
+        /* Style for FAQ accordion */
+        .accordion-item {
+            border-bottom: 1px solid #e2e8f0; /* gray-200 */
+        }
+        .accordion-header {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: #333;
+        }
+        .accordion-content {
+            padding: 0 1.5rem 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+            color: #4a5568; /* gray-700 */
+        }
+        .accordion-content.active {
+            max-height: 500px; /* Adjust as needed for content length */
+            padding: 0 1.5rem 1.5rem;
+        }
+        .accordion-header svg {
+            transition: transform 0.3s ease;
+        }
+        .accordion-header.active svg {
+            transform: rotate(180deg);
+        }
+
+        /* Modal styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            max-width: 90%;
+            max-height: 90%;
+            overflow-y: auto;
+            position: relative;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+        .modal-close-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #4a5568;
+        }
+
+        /* Custom styles for the range input slider */
+        input[type="range"] {
+            -webkit-appearance: none; /* Remove default styling for Chrome/Safari */
+            appearance: none;
+            background: transparent; /* Hide the default track */
+            width: 100%;
+            height: 8px; /* Height of the track */
+            border-radius: 4px;
+            outline: none;
+            margin: 10px 0; /* Add some vertical margin */
+        }
+
+        /* Track styling for Webkit browsers (Chrome, Safari) */
+        input[type="range"]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(to right, #6366f1, #8b5cf6); /* Gradient track */
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* Thumb styling for Webkit browsers */
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none; /* Remove default styling */
+            appearance: none;
+            height: 20px; /* Size of the thumb */
+            width: 20px;
+            background-color: #ffffff; /* White thumb */
+            border: 2px solid #6366f1; /* Border color */
+            border-radius: 50%; /* Circular thumb */
+            cursor: grab;
+            margin-top: -6px; /* Center the thumb vertically on the track */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Track styling for Firefox */
+        input[type="range"]::-moz-range-track {
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(to right, #6366f1, #8b5cf6);
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* Thumb styling for Firefox */
+        input[type="range"]::-moz-range-thumb {
+            height: 20px;
+            width: 20px;
+            background-color: #ffffff;
+            border: 2px solid #6366f1;
+            border-radius: 50%;
+            cursor: grab;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Focus outline for accessibility */
+        input[type="range"]:focus::-webkit-slider-thumb {
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.5); /* Blue outline on focus */
+        }
+        input[type="range"]:focus::-moz-range-thumb {
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.5);
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- Header Section -->
+    <header class="bg-white shadow-md py-4 px-6 md:px-12">
+        <nav class="container mx-auto flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-indigo-600 rounded-lg p-2">LENORIO VPN</a>
+            <div class="hidden md:flex space-x-8">
+                <a href="#features" class="text-gray-600 hover:text-indigo-600 transition duration-300 rounded-md p-2">Особенности</a>
+                <a href="#pricing" class="text-gray-600 hover:text-indigo-600 transition duration-300 rounded-md p-2">Тарифы</a>
+                <a href="#" class="text-gray-600 hover:text-indigo-600 transition duration-300 rounded-md p-2" onclick="openModal('faq-modal'); return false;">FAQ</a>
+                <a href="#contact-section" class="text-gray-600 hover:text-indigo-600 transition duration-300 rounded-md p-2">Контакты</a>
+            </div>
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden text-gray-600 hover:text-indigo-600 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white py-20 px-6 md:px-12 text-center rounded-b-3xl shadow-xl">
+        <div class="container mx-auto max-w-4xl">
+            <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6 animate-fade-in-up">
+                Ваша Полная Безопасность и Свобода в Интернете
+            </h1>
+            <p class="text-lg md:text-xl mb-8 opacity-90 animate-fade-in">
+                LENORIO VPN обеспечивает анонимность, защиту данных и доступ к любому контенту без ограничений.
+            </p>
+            <!-- Changed button to an anchor tag to scroll to pricing section -->
+            <a href="#pricing" class="gradient-button inline-block text-white font-bold py-4 px-10 rounded-full text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition duration-300">
+                Начать Бесплатно
+            </a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-16 px-6 md:px-12 bg-white rounded-3xl -mt-12 relative z-10 shadow-lg">
+        <div class="container mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-900">Почему выбирают LENORIO VPN?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="feature-card bg-gray-50 p-8 rounded-2xl shadow-md text-center border border-gray-200">
+                    <div class="text-indigo-600 mb-4">
+                        <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.003 12.003 0 002.92 12c0 3.072 1.887 5.76 4.61 7.153L12 22.01l4.47-2.857a12.003 12.003 0 004.47-7.153 12.003 12.003 0 00-.88-9.056z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 text-gray-900">Надежное Шифрование</h3>
+                    <p class="text-gray-600">Используем передовые алгоритмы шифрования для защиты ваших данных от киберугроз.</p>
+                </div>
+                <!-- Feature 2 -->
+                <div class="feature-card bg-gray-50 p-8 rounded-2xl shadow-md text-center border border-gray-200">
+                    <div class="text-indigo-600 mb-4">
+                        <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18v-9"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 text-gray-900">Глобальная Сеть Серверов</h3>
+                    <p class="text-gray-600">Доступ к тысячам серверов по всему миру для быстрого и стабильного соединения.</p>
+                </div>
+                <!-- Feature 3 -->
+                <div class="feature-card bg-gray-50 p-8 rounded-2xl shadow-md text-center border border-gray-200">
+                    <div class="text-indigo-600 mb-4">
+                        <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 text-gray-900">Высокая Скорость</h3>
+                    <p class="text-gray-600">Оптимизированные серверы обеспечивают высокую скорость без задержек.</p>
+                </div>
+                <!-- Feature 4 -->
+                <div class="feature-card bg-gray-50 p-8 rounded-2xl shadow-md text-center border border-gray-200">
+                    <div class="text-indigo-600 mb-4">
+                        <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 text-gray-900">Политика Отсутствия Логов</h3>
+                    <p class="text-gray-600">Мы не храним логи вашей активности, гарантируя полную конфиденциальность.</p>
+                </div>
+                <!-- Feature 5 -->
+                <div class="feature-card bg-gray-50 p-8 rounded-2xl shadow-md text-center border border-gray-200">
+                    <div class="text-indigo-600 mb-4">
+                        <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 text-gray-900">Круглосуточная Поддержка</h3>
+                    <p class="text-gray-600">Наша команда поддержки всегда готова помочь 24/7.</p>
+                </div>
+                <!-- Feature 6 -->
+                <div class="feature-card bg-gray-50 p-8 rounded-2xl shadow-md text-center border border-gray-200">
+                    <div class="text-indigo-600 mb-4">
+                        <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-1.25-3M15 10V5a3 3 0 00-3-3l-4 9h11l-3 7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 text-gray-900">Простота Использования</h3>
+                    <p class="text-gray-600">Легкая установка и интуитивно понятный интерфейс для всех устройств.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-16 px-6 md:px-12 bg-white rounded-3xl mt-16 shadow-lg">
+        <div class="container mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-900">Наши Тарифы</h2>
+            <!-- Added flex and items-stretch to ensure equal height for price cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
+                <!-- Tariff 1: By Gigabytes -->
+                <div class="price-card bg-gray-50 p-8 rounded-2xl shadow-md text-center border border-gray-200">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4 text-indigo-600">По Гигабайтам</h3>
+                        <p class="text-gray-700 mb-6">Гибкий тариф, платите только за то, что используете.</p>
+                        <div class="mb-6">
+                            <label for="gigabytes-slider" class="block text-lg font-semibold text-gray-800 mb-2">Выберите объем:</label>
+                            <input type="range" id="gigabytes-slider" min="50" max="1000" value="50" step="50" class="w-full h-2 bg-gray-300 rounded-lg appearance-none cursor-pointer">
+                            <p class="text-gray-600 mt-2"><span id="gigabytes-display" class="font-bold text-indigo-600">50</span> ГБ</p>
+                        </div>
+                        <div class="text-4xl font-extrabold text-gray-900 mb-6">
+                            <span id="price-display"></span> €
+                        </div>
+                    </div>
+                    <!-- Added onclick to redirect to Telegram -->
+                    <button onclick="window.location.href='https://t.me/lenorio'" class="gradient-button text-white font-bold py-3 px-8 rounded-full text-lg shadow-md hover:shadow-lg transform hover:-translate-y-1 transition duration-300 w-full mt-auto">
+                        Выбрать
+                    </button>
+                </div>
+
+                <!-- Tariff 2: Unlimited Forever -->
+                <div class="price-card bg-gray-50 p-8 rounded-2xl shadow-md text-center border border-gray-200">
+                    <div>
+                        <h3 class="2xl font-bold mb-4 text-indigo-600">Безлимит Навсегда</h3>
+                        <p class="text-gray-700 mb-6">Оплатите один раз и пользуйтесь VPN без ограничений навсегда.</p>
+                        <div class="text-5xl font-extrabold text-gray-900 mb-6" id="unlimited-forever-price">
+                            20 €
+                        </div>
+                        <p class="text-gray-600 mb-6">Единовременный платеж</p>
+                    </div>
+                    <!-- Added onclick to redirect to Telegram -->
+                    <button onclick="window.location.href='https://t.me/lenorio'" class="gradient-button text-white font-bold py-3 px-8 rounded-full text-lg shadow-md hover:shadow-lg transform hover:-translate-y-1 transition duration-300 w-full mt-auto">
+                        Купить Навсегда
+                    </button>
+                </div>
+
+                <!-- Tariff 3: Unlimited for a Month -->
+                <div class="price-card bg-gray-50 p-8 rounded-2xl shadow-md text-center border border-gray-200">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4 text-indigo-600">Безлимит на Месяц</h3>
+                        <p class="text-gray-700 mb-6">Полный безлимит на месяц, идеальный вариант для краткосрочного использования.</p>
+                        <div class="text-5xl font-extrabold text-gray-900 mb-6" id="unlimited-month-price">
+                            4 €
+                        </div>
+                        <p class="text-gray-600 mb-6">В месяц</p>
+                    </div>
+                    <!-- Added onclick to redirect to Telegram -->
+                    <button onclick="window.location.href='https://t.me/lenorio'" class="gradient-button text-white font-bold py-3 px-8 rounded-full text-lg shadow-md hover:shadow-lg transform hover:-translate-y-1 transition duration-300 w-full mt-auto">
+                        Оформить Подписку
+                    </button>
+                </div>
+            </div>
+            <!-- Removed currency loading/error messages -->
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact-section" class="py-16 px-6 md:px-12 bg-gray-100 rounded-3xl mt-16 shadow-lg">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-900">Свяжитесь с нами</h2>
+            <div class="flex flex-col md:flex-row justify-center items-center space-y-8 md:space-y-0 md:space-x-12">
+                <!-- Telegram Contact -->
+                <a href="https://t.me/lenorio" target="_blank" class="flex flex-col items-center text-indigo-600 hover:text-indigo-800 transition duration-300 contact-icon">
+                    <i class="fab fa-telegram fa-4x mb-4"></i>
+                    <span class="text-xl font-semibold">Написать в Telegram</span>
+                    <span class="text-gray-600">t.me/lenorio</span>
+                </a>
+                <!-- Website Contact -->
+                <a href="https://lenorio.ru" target="_blank" class="flex flex-col items-center text-indigo-600 hover:text-indigo-800 transition duration-300 contact-icon">
+                    <i class="fas fa-globe fa-4x mb-4"></i>
+                    <span class="text-xl font-semibold">Посетить наш сайт</span>
+                    <span class="text-gray-600">lenorio.ru</span>
+                </a>
+                <!-- Telegram Channel -->
+                <a href="https://t.me/lenorios" target="_blank" class="flex flex-col items-center text-indigo-600 hover:text-indigo-800 transition duration-300 contact-icon">
+                    <i class="fab fa-telegram-plane fa-4x mb-4"></i>
+                    <span class="text-xl font-semibold">Наш Telegram-канал</span>
+                    <span class="text-gray-600">t.me/lenorios</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="bg-indigo-700 text-white py-16 px-6 md:px-12 text-center mt-16 rounded-t-3xl shadow-xl">
+        <div class="container mx-auto max-w-3xl">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">Готовы к Безопасному Интернету?</h2>
+            <p class="text-lg md:text-xl mb-8 opacity-90">Присоединяйтесь к тысячам довольных пользователей LENORIO VPN уже сегодня!</p>
+            <button class="gradient-button text-white font-bold py-4 px-10 rounded-full text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition duration-300">
+                Получить LENORIO VPN
+            </button>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer id="footer" class="bg-gray-900 text-gray-400 py-10 px-6 md:px-12">
+        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center text-center md:text-left">
+            <div class="mb-6 md:mb-0">
+                <h3 class="text-xl font-bold text-white mb-2">LENORIO VPN</h3>
+                <p>&copy; 2025 Все права защищены.</p>
+            </div>
+            <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-8">
+                <a href="#" class="hover:text-white transition duration-300" onclick="openModal('privacy-policy-modal'); return false;">Политика конфиденциальности</a>
+                <a href="#" class="hover:text-white transition duration-300" onclick="openModal('terms-of-service-modal'); return false;">Условия использования</a>
+                <a href="#" class="hover:text-white transition duration-300" onclick="openModal('faq-modal'); return false;">FAQ</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals for Privacy Policy, Terms, and FAQ -->
+
+    <!-- Privacy Policy Modal -->
+    <div id="privacy-policy-modal" class="modal-overlay">
+        <div class="modal-content w-full md:w-3/4 lg:w-1/2">
+            <button class="modal-close-button" onclick="closeModal('privacy-policy-modal')">&times;</button>
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-8 text-gray-900">Политика конфиденциальности</h2>
+            <div class="prose max-w-none text-gray-700">
+                <p>Настоящая Политика конфиденциальности описывает, как LENORIO VPN собирает, использует и защищает информацию, которую вы предоставляете при использовании нашего сервиса.</p>
+                <h3 class="text-2xl font-semibold mt-8 mb-4 text-gray-800">Сбор информации</h3>
+                <p>Мы не собираем и не храним никакие данные о вашей онлайн-активности, включая историю просмотров, IP-адреса, DNS-запросы или другую информацию, которая может быть использована для идентификации вас. Наш сервис работает по строгой политике отсутствия логов.</p>
+                <h3 class="text-2xl font-semibold mt-8 mb-4 text-gray-800">Использование информации</h3>
+                <p>Поскольку мы не собираем личную информацию о вашей онлайн-активности, мы не используем ее для каких-либо целей. Информация, которую вы предоставляете при регистрации (например, адрес электронной почты для управления аккаунтом), используется исключительно для предоставления и улучшения нашего сервиса, а также для связи с вами по вопросам поддержки.</p>
+                <h3 class="text-2xl font-semibold mt-8 mb-4 text-gray-800">Защита информации</h3>
+                <p>Мы применяем различные меры безопасности для защиты вашей личной информации, когда вы размещаете заказ или входите в свою учетную запись. Вся конфиденциальная информация передается через защищенные каналы и шифруется.</p>
+                <h3 class="2xl font-semibold mt-8 mb-4 text-gray-800">Изменения в Политике конфиденциальности</h3>
+                <p>Мы можем время от времени обновлять нашу Политику конфиденциальности. Мы уведомим вас о любых изменениях, опубликовав новую Политику конфиденциальности на этой странице. Рекомендуется периодически просматривать эту Политику конфиденциальности на предмет изменений.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terms of Service Modal -->
+    <div id="terms-of-service-modal" class="modal-overlay">
+        <div class="modal-content w-full md:w-3/4 lg:w-1/2">
+            <button class="modal-close-button" onclick="closeModal('terms-of-service-modal')">&times;</button>
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-8 text-gray-900">Условия использования</h2>
+            <div class="prose max-w-none text-gray-700">
+                <p>Добро пожаловать в LENORIO VPN. Используя наш сервис, вы соглашаетесь соблюдать следующие условия использования.</p>
+                <h3 class="text-2xl font-semibold mt-8 mb-4 text-gray-800">Принятие условий</h3>
+                <p>Получая доступ к LENORIO VPN и используя его, вы подтверждаете, что прочитали, поняли и согласны соблюдать настоящие Условия использования. Если вы не согласны с какими-либо из этих условий, вы не должны использовать наш сервис.</p>
+                <h3 class="text-2xl font-semibold mt-8 mb-4 text-gray-800">Использование сервиса</h3>
+                <p>Вы соглашаетесь использовать LENORIO VPN только в законных целях и в соответствии со всеми применимыми законами и правилами. Вы не должны использовать наш сервис для:</p>
+                <ul class="list-disc list-inside ml-4">
+                    <li>Незаконной деятельности, включая, но не ограничиваясь, нарушение авторских прав, распространение вредоносного ПО или мошенничество.</li>
+                    <li>Спама или массовой рассылки нежелательных сообщений.</li>
+                    <li>Вмешательства в работу других пользователей или сетей.</li>
+                    <li>Любой деятельности, которая может нанести вред LENORIO VPN или его репутации.</li>
+                </ul>
+                <h3 class="text-2xl font-semibold mt-8 mb-4 text-gray-800">Отказ от гарантий</h3>
+                <p>LENORIO VPN предоставляется "как есть" без каких-либо гарантий, явных или подразумеваемых. Мы не гарантируем, что сервис будет бесперебойным, безошибочным или свободным от вирусов или других вредоносных компонентов.</p>
+                <h3 class="text-2xl font-semibold mt-8 mb-4 text-gray-800">Ограничение ответственности</h3>
+                <p>Ни при каких обстоятельствах LENORIO VPN не несет ответственности за любые прямые, косвенные, случайные, специальные или косвенные убытки, возникающие в результате использования или невозможности использования нашего сервиса.</p>
+                <h3 class="text-2xl font-semibold mt-8 mb-4 text-gray-800">Изменения в условиях</h3>
+                <p>Мы оставляем за собой право изменять настоящие Условия использования в любое время. Все изменения вступают в силу немедленно после их публикации на этой странице. Ваше дальнейшее использование сервиса после таких изменений означает ваше согласие с новыми условиями.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- FAQ Modal -->
+    <div id="faq-modal" class="modal-overlay">
+        <div class="modal-content w-full md:w-3/4 lg:w-1/2">
+            <button class="modal-close-button" onclick="closeModal('faq-modal')">&times;</button>
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-8 text-gray-900">Часто Задаваемые Вопросы (FAQ)</h2>
+            <div class="accordion-container">
+                <!-- FAQ Item 1 -->
+                <div class="accordion-item bg-gray-50 rounded-lg mb-4 shadow-sm">
+                    <div class="accordion-header p-6 rounded-lg">
+                        <h3 class="text-lg font-semibold">Что такое LENORIO VPN?</h3>
+                        <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="pb-6">LENORIO VPN — это сервис виртуальной частной сети, который шифрует ваше интернет-соединение и скрывает ваш IP-адрес, обеспечивая анонимность, безопасность и свободу в интернете.</p>
+                    </div>
+                </div>
+                <!-- FAQ Item 2 -->
+                <div class="accordion-item bg-gray-50 rounded-lg mb-4 shadow-sm">
+                    <div class="accordion-header p-6 rounded-lg">
+                        <h3 class="text-lg font-semibold">Как LENORIO VPN защищает мои данные?</h3>
+                        <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="pb-6">Мы используем передовые протоколы шифрования, чтобы создать защищенный туннель для вашего трафика. Это предотвращает перехват ваших данных хакерами, интернет-провайдерами и другими третьими лицами.</p>
+                    </div>
+                </div>
+                <!-- FAQ Item 3 -->
+                <div class="accordion-item bg-gray-50 rounded-lg mb-4 shadow-sm">
+                    <div class="accordion-header p-6 rounded-lg">
+                        <h3 class="text-lg font-semibold">Могу ли я использовать LENORIO VPN на нескольких устройствах?</h3>
+                        <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="pb-6">Да, с одной подпиской на LENORIO VPN вы можете подключить несколько устройств одновременно, включая смартфоны, планшеты, компьютеры и даже роутеры.</p>
+                    </div>
+                </div>
+                <!-- FAQ Item 4 -->
+                <div class="accordion-item bg-gray-50 rounded-lg mb-4 shadow-sm">
+                    <div class="accordion-header p-6 rounded-lg">
+                        <h3 class="text-lg font-semibold">Ведет ли LENORIO VPN логи моей активности?</h3>
+                        <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="pb-6">Нет, мы придерживаемся строгой политики отсутствия логов. Это означает, что мы не собираем, не храним и не передаем информацию о вашей онлайн-активности.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        // JavaScript for gigabytes slider and price display
+        const gigabytesSlider = document.getElementById('gigabytes-slider');
+        const gigabytesDisplay = document.getElementById('gigabytes-display');
+        const priceDisplay = document.getElementById('price-display');
+
+        // Function to update price based on gigabytes
+        function updatePrice() {
+            const gigabytes = parseInt(gigabytesSlider.value);
+            // Update the displayed gigabytes amount
+            gigabytesDisplay.textContent = gigabytes;
+
+            // Base price: 1 Euro for 50 GB
+            const priceInEuro = (gigabytes / 50) * 1;
+            priceDisplay.textContent = priceInEuro.toFixed(0); // Display as whole number
+        }
+
+        // FAQ Accordion functionality for modals
+        function setupAccordion(containerId) {
+            document.querySelectorAll(`#${containerId} .accordion-header`).forEach(header => {
+                header.addEventListener('click', () => {
+                    const content = header.nextElementSibling;
+                    const svg = header.querySelector('svg');
+
+                    // Toggle active class on header and content
+                    header.classList.toggle('active');
+                    content.classList.toggle('active');
+
+                    // Toggle max-height for smooth transition
+                    if (content.classList.contains('active')) {
+                        content.style.maxHeight = content.scrollHeight + "px";
+                    } else {
+                        content.style.maxHeight = "0";
+                    }
+                });
+            });
+        }
+
+        // Modal functions
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling background
+            if (modalId === 'faq-modal') {
+                // Re-setup accordion for FAQ modal content when it opens
+                setupAccordion('faq-modal');
+            }
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.remove('active');
+            document.body.style.overflow = ''; // Restore scrolling
+            // Reset max-height for accordion items when closing FAQ modal
+            if (modalId === 'faq-modal') {
+                document.querySelectorAll(`#faq-modal .accordion-content`).forEach(content => {
+                    content.classList.remove('active');
+                    content.style.maxHeight = "0";
+                });
+                document.querySelectorAll(`#faq-modal .accordion-header`).forEach(header => {
+                    header.classList.remove('active');
+                });
+            }
+        }
+
+        // Close modal when clicking outside of the content
+        document.querySelectorAll('.modal-overlay').forEach(overlay => {
+            overlay.addEventListener('click', (event) => {
+                if (event.target === overlay) {
+                    closeModal(overlay.id);
+                }
+            });
+        });
+
+
+        // Initial setup on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            updatePrice(); // Update prices on page load
+            gigabytesSlider.addEventListener('input', updatePrice);
+        });
+    </script>
+
+</body>
+</html>
