@@ -3,24 +3,37 @@ let hintDisplayed = false; // Флаг, чтобы проверить, была 
 
 function showPasswordInput() {
     document.getElementById("password-input").classList.add("visible");
+    document.getElementById("start-btn").classList.add("hidden");
 }
 
 function checkPassword() {
     const password = document.getElementById("password").value;
     if (password === "lenorio") {
-        // Создание элемента сообщения динамически после успешного ввода пароля
-        const message = document.createElement("div");
-        message.id = "message";
-        message.classList.add("message", "visible");
-        message.textContent = "Люблю Вику";
-        
-        // Добавление элемента сообщения в контейнер
         const container = document.querySelector(".container");
-        container.appendChild(message);
+        
+        // Очищаем контейнер от кнопки и поля ввода пароля
+        container.innerHTML = '';
 
-        document.getElementById("start-btn").classList.add("hidden");
-        document.getElementById("password-input").classList.remove("visible");
-        document.getElementById("password-input").classList.add("hidden");
+        // --- ИЗМЕНЕНИЯ ЗДЕСЬ ---
+
+        // 1. Создание элемента с новым текстом
+        const message = document.createElement("div");
+        message.classList.add("message", "visible");
+        message.textContent = "Я любил Вику, но мои чувства еще не остыли";
+        
+        // 2. Создание iframe для Яндекс Музыки
+        const musicPlayer = document.createElement("iframe");
+        musicPlayer.frameBorder = "0";
+        musicPlayer.allow = "clipboard-write";
+        musicPlayer.style.cssText = "border:none; width:614px; height:244px; margin-top: 20px;"; // Добавлен отступ сверху
+        musicPlayer.width = "614";
+        musicPlayer.height = "244";
+        musicPlayer.src = "https://music.yandex.ru/iframe/album/37170078/track/140449288";
+        
+        // 3. Добавление текста и плеера в контейнер
+        container.appendChild(message);
+        container.appendChild(musicPlayer);
+
     } else {
         incorrectAttempts++;
         document.getElementById("error-message").classList.add("visible");
@@ -38,6 +51,8 @@ function checkPassword() {
         }
     }
 }
+
+// Весь остальной JS-код остается без изменений
 
 function getRandomPosition(rectangle, size) {
     const edge = Math.floor(Math.random() * 4);
@@ -60,8 +75,8 @@ function getRandomPosition(rectangle, size) {
 
 function getRandomRedShade() {
     const red = 255;
-    const green = Math.floor(Math.random() * 100); // Небольшие значения зелёного
-    const blue = Math.floor(Math.random() * 100);  // Небольшие значения синего
+    const green = Math.floor(Math.random() * 100);
+    const blue = Math.floor(Math.random() * 100);
     const alpha = 0.8;
     return `rgba(${red}, ${green}, ${blue}, ${alpha})`;
 }
@@ -78,7 +93,7 @@ function createRandomCircle(rectangleElement) {
     circle.style.height = `${size}px`;
     circle.style.left = `${position.x}px`;
     circle.style.top = `${position.y}px`;
-    circle.style.backgroundColor = getRandomRedShade(); // Разные оттенки красного
+    circle.style.backgroundColor = getRandomRedShade();
     circle.style.position = "absolute";
     circle.style.borderRadius = "50%";
     circle.style.filter = "blur(50px)";
@@ -116,5 +131,12 @@ document.addEventListener("DOMContentLoaded", function() {
     document.addEventListener("mousemove", (e) => {
         cursorCircle.style.left = e.pageX + "px";
         cursorCircle.style.top = e.pageY + "px";
+    });
+
+    // Добавляем обработчик нажатия Enter для поля ввода пароля
+    document.getElementById('password').addEventListener('keyup', function(event) {
+        if (event.key === 'Enter') {
+            checkPassword();
+        }
     });
 });
