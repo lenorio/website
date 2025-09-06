@@ -97,13 +97,13 @@ body {
 }
 
 .hidden {
-    display: none;
+    display: none !important; /* Важно для переопределения .visible */
     opacity: 0;
     transition: opacity 0.5s;
 }
 
 .visible {
-    display: block;
+    display: block; /* или flex, в зависимости от контекста */
     opacity: 1;
     animation: fadeIn 1s ease-in-out;
 }
